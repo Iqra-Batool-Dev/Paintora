@@ -1,6 +1,7 @@
 import React from "react";
 import painting from "../assets/images/painting.png";
 
+
 function SidePanel() {
   return (
     <>

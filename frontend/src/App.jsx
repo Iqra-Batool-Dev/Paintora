@@ -1,13 +1,16 @@
 import { useState } from 'react'
-import Signup from './components/signupForm/Signup'
+import Navbar from './components/Header/Navbar'
 import './App.css'
+import { Outlet } from 'react-router-dom'
+
 
 function App() {
-  const [count, setCount] = useState(0)
+
 
   return (
     <>
-      <Signup/>
+      <Navbar/>
+      <Outlet/>
     </>
   )
 }
