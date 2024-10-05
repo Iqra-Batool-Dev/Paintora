@@ -29,7 +29,8 @@ function Signup() {
 
   // function is ended
   return (
-    <div className=" w-[100%] h-[100vh]  flex flex-col  overflow-hidden bg-primary-800  md:rounded-[20px] shadow-xl  md:h-[95vh] md:mx-auto md:my-5  md:bg-gray-50 md:w-[60%] md:flex-row ">
+    <div className=" flex flex-col justify-center  ">
+    <div className=" w-[100%] h-[100vh]  flex flex-col  overflow-hidden bg-primary-800  md:rounded-[20px] shadow-xl md:h-[81vh] md:mx-auto md:my-5  md:bg-gray-50 md:w-[60%] md:flex-row ">
       {/* left side panel */}
       <SidePanel />
 
@@ -105,6 +106,7 @@ function Signup() {
       <div className=" w-[100%] flex flex-row justify-center md:hidden ">
         <img src={painting} alt="this is an image" />
       </div>
+    </div>
     </div>
   );
 }

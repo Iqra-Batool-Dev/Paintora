@@ -3,14 +3,14 @@ import { Link, NavLink } from "react-router-dom";
 import pLogo from "../../assets/images/pLogo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faMessage } from "@fortawesome/free-solid-svg-icons";
-import SearchBar from "../SearchBar";
+import {SearchBar , MobileSearchBar} from "../SearchBar";
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  
-
+  const [clicked , setClicked] = useState (false)
+ 
   
   return (
-    <header className="w-[100%] bg-white sticky top-0 left-0 ">
+    <header className="w-[100%] bg-white sticky top-0 left-0 font-Montserrat z-50">
       <nav className=" p-3 border-b-[1px] w-[100%]">
         <div className=" flex flex-row justify-between items-center w-[100%]">
           {/* Mobile Menu button  */}
@@ -22,17 +22,17 @@ function Navbar() {
             <img src={pLogo} alt="this is a logo" className=" w-25 h-12" />
           </Link>
           {/* navlist */}
-          <div className=" hidden justify-between items-center w-full lg:flex  lg:w-auto ">
-            <ul className=" flex flex-col lg:flex-row lg:space-x-4">
+          <div className=" hidden justify-center  items-center w-full lg:flex  lg:w-auto ">
+            <ul className=" flex flex-col lg:flex-row lg:space-x-1">
               <li>
                 <NavLink
-                  to="/find"
+                  to="/painters"
                   className={({ isActive }) =>
-                    ` text-[1rem]  font-semibold px-3 py-3  hover:text-secondary-500
+                    ` text-[1rem]  font-semibold px-3 py-3  hover:text-gray-400
                                     ${
                                       isActive
                                         ? "text-secondary-500 "
-                                        : " text-black "
+                                        : " text-black/65 "
                                     } `
                   }
                 >
@@ -41,13 +41,13 @@ function Navbar() {
               </li>
               <li>
                 <NavLink
-                  to="/"
+                  to="/inspiration"
                   className={({ isActive }) =>
-                    ` text-[1rem]  font-semibold px-3 py-3  hover:text-secondary-500
+                    ` text-[1rem]  font-semibold px-3 py-3  hover:text-gray-400
                                     ${
                                       isActive
                                         ? "text-secondary-500 "
-                                        : " text-black "
+                                        : " text-black/65 "
                                     } `
                   }
                 >
@@ -58,26 +58,26 @@ function Navbar() {
                 <NavLink
                   to="/professional"
                   className={({ isActive }) =>
-                    `text-[1rem]  font-semibold px-3 py-3  hover:text-secondary-500
+                    `text-[1rem]  font-semibold px-3 py-3  hover:text-gray-400
                                     ${
                                       isActive
                                         ? "text-secondary-500 "
-                                        : " text-black "
+                                        : " text-black/65 "
                                     } `
                   }
                 >
-                  Become Professional
+                  Share work
                 </NavLink>
               </li>
               <li>
                 <NavLink
                   to="/about"
                   className={({ isActive }) =>
-                    `text-[1rem]  font-semibold px-3 py-3  hover:text-secondary-500
+                    `text-[1rem]  font-semibold px-3 py-3  hover:text-gray-400
                                     ${
                                       isActive
                                         ? "text-secondary-500 "
-                                        : " text-black "
+                                        : " text-black/65 "
                                     } `
                   }
                 >
@@ -88,21 +88,23 @@ function Navbar() {
           </div>
 
           {/* search bar here */}
+          <div className=" hidden lg:block">
           <SearchBar/>
+          </div>
           {/* search button for mobile nav */}
-          <button className=" text-[1.2rem] py-2 px-3 text-gray-600  lg:hidden">
+          <button className=" text-[1.2rem] py-2 px-3 text-gray-600  lg:hidden " onClick={()=> setClicked(!clicked)}>
             <FontAwesomeIcon icon={faSearch}/>
           </button>
 
           <div className=" flex flex-row  justify-between items-center gap-2 w-auto">
             <Link
               to="/login"
-              className=" text-[1rem]  font-semibold px-4 py-1 border-0 rounded-lg hover:bg-primary-50 hidden lg:block"
+              className=" text-[1rem]  font-semibold px-4 py-1 border-0 rounded-lg text-black/65 hover:bg-primary-50 hidden lg:block"
             >
               Login
             </Link>
             <Link
-              to="/"
+              to="/signup"
               className=" text-[1rem] text-primary-500 font-semibold px-4 py-1  border-[2px] border-primary-500 rounded-lg duration-100 hover:bg-primary-500 hover:text-white"
             >
               SignUp
@@ -135,7 +137,7 @@ function Navbar() {
           </li>
           <li className=" py-2 px-2 w-full border-0 rounded-md hover:bg-gray-200">
             <NavLink
-              to="/"
+              to="/inspiration"
               className={({ isActive }) =>
                 ` text-[1rem]  font-semibold 
                                     ${
@@ -143,7 +145,9 @@ function Navbar() {
                                         ? "text-secondary-500 "
                                         : " text-black "
                                     } `
+                                    
               }
+              onClick={() => setIsOpen(!isOpen)}
             >
               Get Inspired
             </NavLink>
@@ -159,6 +163,7 @@ function Navbar() {
                                         : " text-black "
                                     } `
               }
+              onClick={() => setIsOpen(!isOpen)}
             >
               become painter
             </NavLink>
@@ -174,6 +179,7 @@ function Navbar() {
                                         : " text-black "
                                     } `
               }
+              onClick={() => setIsOpen(!isOpen)}
             >
               About Us
             </NavLink>
@@ -182,8 +188,9 @@ function Navbar() {
         <hr />
         <div>
             <Link
-              to="#"
+              to="/login"
               className=" text-[1rem]  font-semibold px-4 py-2 border-0 rounded-lg hover:bg-gray-200"
+              onClick={() => setIsOpen(!isOpen)}
             >
               Login
             </Link>
@@ -191,6 +198,15 @@ function Navbar() {
       </div>
       </div>
       {/* sidebar mobile menu end......... */}
+
+      {/* Mobile search bar */}
+      {/* <div className={` w-full h-full lg:hidden bg-black/50 backdrop-blur-sm  fixed top-0 left-0 ${ onkeydown={hidden} } ` }>
+        <div className=" flex flex-col gap-3 px-3 py-5 w-[100%]  h-[200px]  absolute top-0 left-0  bg-blend-overlay bg-white border-[1px]  lg:hidden   "> */}
+        {
+            (clicked ? <MobileSearchBar/>: null )
+          }
+        {/* </div>
+      </div> */}
     </header>
   );
 }

@@ -28,7 +28,8 @@ function Login() {
 
   // function is ended
   return (
-    <div className=" w-[100%] h-[100vh] flex flex-col overflow-hidden bg-primary-800 md:rounded-[20px] shadow-xl md:h-[95vh] md:mx-auto md:my-5 md:bg-gray-50 md:w-[60%] md:flex-row ">
+    <div className=" flex flex-col justify-center  ">
+    <div className="  w-[100%] h-[100vh] flex flex-col overflow-hidden bg-primary-800 md:rounded-[20px] shadow-xl md:h-[81vh] md:mx-auto md:my-5 md:bg-gray-50 md:w-[60%] md:flex-row ">
       {/* left side panel */}
       <SidePanel />
 
@@ -74,7 +75,7 @@ function Login() {
           </button>
           <div className="flex flex-row my-1 gap-1">
             <p className="text-[0.9rem] text-white md:text-black">Do not have an account?</p>
-            <Link to="/" className="text-[0.9rem] text-white hover:text-primary-300 md:text-primary-900 underline">
+            <Link to="/signup" className="text-[0.9rem] text-white hover:text-primary-300 md:text-primary-900 underline">
               Signup
             </Link>
           </div>
@@ -109,6 +110,7 @@ function Login() {
       <div className=" w-[100%] md:hidden ">
         <img src={painting} alt="this is an image" />
       </div>
+    </div>
     </div>
   );
 }
