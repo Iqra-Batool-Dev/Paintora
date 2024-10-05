@@ -1,0 +1,62 @@
+[
+    {
+        "id": 1,
+        "userName": "Alexandar",
+        "speciality": "Commercial Painter",
+        "image" :"https://res.cloudinary.com/doo11wfdb/image/upload/t_card/v1724134344/istockphoto-1218078425-612x612_hh5raj.jpg"
+    },
+    {
+        "id": 2,
+        "userName": "Saleem",
+        "speciality": "Home Painter",
+        "image" :"https://res.cloudinary.com/doo11wfdb/image/upload/t_card/v1724134196/istockphoto-1175783184-612x612_r9ojxi.jpg"
+    },
+    {
+        "id": 3,
+        "userName": "M. Suleman",
+        "speciality": "Senior Painter",
+        "image" :"https://res.cloudinary.com/doo11wfdb/image/upload/t_card/v1724134059/istockphoto-1497811960-612x612_qeddmh.jpg"
+    },
+    {
+        "id": 4,
+        "userName": "Harry",
+        "speciality": "Home Painter",
+        "image" :"https://res.cloudinary.com/doo11wfdb/image/upload/t_card/v1724133668/istockphoto-184879439-612x612_aqpv0a.jpg"
+    },
+    {
+        "id": 5,
+        "userName": "Nadeem",
+        "speciality": "Home Painter",
+        "image" :"https://res.cloudinary.com/doo11wfdb/image/upload/t_card/v1724133944/istockphoto-1444268601-612x612_q0fdkm.jpg"
+    },
+    {
+        "id": 6,
+        "userName": "Akhtar",
+        "speciality": "wall Painter",
+        "image" :"https://res.cloudinary.com/doo11wfdb/image/upload/t_card/v1724174432/istockphoto-1320995254-612x612_wptcgv.jpg"
+    },
+    {
+        "id": 7,
+        "userName": "Ahmmad",
+        "speciality": "Home Painter",
+        "image" :"https://res.cloudinary.com/doo11wfdb/image/upload/t_card/v1724133988/istockphoto-1457344216-612x612_eb31rq.jpg"
+    },
+    {
+        "id": 8,
+        "userName": "Shehryar",
+        "speciality": "Furniture Painter",
+        "image" :"https://res.cloudinary.com/doo11wfdb/image/upload/t_card/v1724134289/istockphoto-1214267396-612x612_dtrt7s.jpg"
+    },
+    {
+        "id": 9,
+        "userName": "Aun",
+        "speciality": "Home Painter",
+        "image" :"https://res.cloudinary.com/doo11wfdb/image/upload/t_card/v1724133830/istockphoto-1494188752-612x612_phuhcc.jpg"
+    },
+    {
+        "id": 10,
+        "userName": "jerry",
+        "speciality": "Spray Painter",
+        "image" :"https://res.cloudinary.com/doo11wfdb/image/upload/t_card/v1724136141/istockphoto-884972020-612x612_kczhhb.jpg"
+    }
+]
