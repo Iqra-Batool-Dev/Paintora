@@ -24,12 +24,12 @@ function Painters() {
 
     // }
 
-            // const searchResults = paintersData.filter(item => item.speciality.toString().toLowerCase().includes(category.toLowerCase()))
-            const searchResults = paintersData.filter(item => /[item.speciality | category]/ )
+            const searchResults = paintersData.filter(item => item.speciality.toString().toLowerCase().includes(category.toLowerCase()))
+            // const searchResults = paintersData.filter(item => /[item.speciality | category]/ )
     
     
     return (
-    <div className=' w-[100%] py-4 px-8'>
+    <div className=' w-[100%] py-4 px-8'> 
         <div className=' search-heading my-5 text-[1.8rem] text-black font-bold'>{searchHeading}</div>
 
         {/* category buttons */}
