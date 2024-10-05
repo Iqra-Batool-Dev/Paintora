@@ -17,6 +17,8 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-fast-marquee": "^1.6.5",
+    "react-horizontal-scrolling-menu": "^7.1.8",
     "react-router-dom": "^6.25.1"
   },
   "devDependencies": {

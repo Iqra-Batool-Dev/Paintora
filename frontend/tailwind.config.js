@@ -46,6 +46,10 @@ export default {
           900: '#7b2921',
           950: '#43110c'
         }
+      },
+      fontFamily:{
+        Montserrat: ['Montserrat', 'sans-serif'],
+        Merienda: ['Merienda',' cursive']
       }
     },
   },
