@@ -1,0 +1,201 @@
+[
+    {
+        "id" : 1,
+        "name" : "John deo",
+        "avatar" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724134289/istockphoto-1214267396-612x612_dtrt7s.jpg",
+        "location" : "Faisalabad, Punjab Pakistan",
+        "media" : [
+            {
+                "type" : "video",
+                "url" : "src/assets/images/paintgirl.mp4"
+            },
+            {
+                "type" : "image",
+                "url" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724658343/istockphoto-464586322-612x612_snmyz4.jpg"
+            },
+            {
+                "type" : "image",
+                "url" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724658746/istockphoto-942803368-612x612_nvvyxt.jpg"
+            }
+        ] ,
+        "speciality": ["interior painter"]
+        
+    },
+    {
+        "id" : 2,
+        "name" : "Thornton Wabet",
+        "avatar" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724133944/istockphoto-1444268601-612x612_q0fdkm.jpg",
+        "location" : "Gujranwala, Punjab Pakistan",
+        "media" : [
+            {
+                "type" : "image",
+                "url" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724658746/istockphoto-942803368-612x612_nvvyxt.jpg"
+            },
+            {
+                "type" : "image",
+                "url" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724655250/istockphoto-1852536322-612x612_sdx9g9.jpg"
+            },
+            {
+                "type" :"image",
+                "url" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724655250/istockphoto-1852536322-612x612_sdx9g9.jpg"
+            }
+        ] ,
+        "speciality": ["commercial painter"]
+        
+    },
+    {
+        "id" : 3,
+        "name" : "Ellerey Boumphrey",
+        "avatar" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724133830/istockphoto-1494188752-612x612_phuhcc.jpg",
+        "location" : "islamabad Pakistan",
+        "media" : [
+            {
+                "type" :"image",
+                "url" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724655372/istockphoto-1304915419-612x612_nxmlry.jpg"
+            },
+            {
+                "type" : "video",
+                "url" : "src/assets/images/paintgirl.mp4"
+            },
+            {
+                "type" : "image",
+                "url" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724658343/istockphoto-464586322-612x612_snmyz4.jpg"
+            }
+        ] ,
+        "speciality": ["Home painter"]
+        
+    },
+    {
+        "id" : 4,
+        "name" : "Elton Bucktharp",
+        "avatar" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724134059/istockphoto-1497811960-612x612_qeddmh.jpg",
+        "location" : "kpk, northern areas Pakistan",
+        "media" : [
+            {
+                "type" :"image",
+                "url" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724655413/istockphoto-1275833236-612x612_ysfjiv.jpg"
+            },
+            {
+                "type" : "image",
+                "url" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724658343/istockphoto-464586322-612x612_snmyz4.jpg"
+            },
+            {
+                "type" :"image",
+                "url" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724655862/istockphoto-1275678497-612x612_v6x9qi.jpg"
+            }
+        ] ,
+        "speciality": ["furniture painting"]
+        
+    },
+    {
+        "id" : 5,
+        "name" : "Fayre Chantler",
+        "avatar" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724134289/istockphoto-1214267396-612x612_dtrt7s.jpg",
+        "location" : "karachi, sindh Pakistan",
+        "media" : [
+            {
+                "type" :"image",
+                "url" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724658699/istockphoto-942803382-612x612_g1g50q.jpg"
+            },
+            {
+                "type" :"image",
+                "url": "https://res.cloudinary.com/doo11wfdb/image/upload/v1724658300/istockphoto-1146295665-612x612_ccimvl.jpg"
+            },
+            {
+                "type":"image",
+                "url": "https://res.cloudinary.com/doo11wfdb/image/upload/v1724658343/istockphoto-464586322-612x612_snmyz4.jpg"
+            }
+        ] ,
+        "speciality": ["flauk painting"]
+        
+    },
+    {
+        "id" : 6,
+        "name" : "John deo",
+        "avatar" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724134289/istockphoto-1214267396-612x612_dtrt7s.jpg",
+        "location" : "Faisalabad, Punjab Pakistan",
+        "media" : [
+            {
+                "type" : "video",
+                "url" : "src/assets/images/paintgirl.mp4"
+            },
+            {
+                "type" : "image",
+                "url" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724658343/istockphoto-464586322-612x612_snmyz4.jpg"
+            },
+            {
+                "type" : "image",
+                "url" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724658746/istockphoto-942803368-612x612_nvvyxt.jpg"
+            }
+        ] ,
+        "speciality": ["interior painter"]
+        
+    },
+    {
+        "id" : 7,
+        "name" : "Thornton Wabet",
+        "avatar" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724133944/istockphoto-1444268601-612x612_q0fdkm.jpg",
+        "location" : "Gujranwala, Punjab Pakistan",
+        "media" : [
+            {
+                "type" : "image",
+                "url" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724658746/istockphoto-942803368-612x612_nvvyxt.jpg"
+            },
+            {
+                "type" : "image",
+                "url" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724655250/istockphoto-1852536322-612x612_sdx9g9.jpg"
+            },
+            {
+                "type" :"image",
+                "url" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724655250/istockphoto-1852536322-612x612_sdx9g9.jpg"
+            }
+        ] ,
+        "speciality": ["commercial painter"]
+        
+    },
+    {
+        "id" : 8,
+        "name" : "Ellerey Boumphrey",
+        "avatar" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724133830/istockphoto-1494188752-612x612_phuhcc.jpg",
+        "location" : "islamabad Pakistan",
+        "media" : [
+            {
+                "type" :"image",
+                "url" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724655372/istockphoto-1304915419-612x612_nxmlry.jpg"
+            },
+            {
+                "type" : "video",
+                "url" : "src/assets/images/paintgirl.mp4"
+            },
+            {
+                "type" : "image",
+                "url" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724658343/istockphoto-464586322-612x612_snmyz4.jpg"
+            }
+        ] ,
+        "speciality": ["Home painter"]
+        
+    },
+    {
+        "id" : 9,
+        "name" : "Elton Bucktharp",
+        "avatar" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724134059/istockphoto-1497811960-612x612_qeddmh.jpg",
+        "location" : "kpk, northern areas Pakistan",
+        "media" : [
+            {
+                "type" :"image",
+                "url" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724655413/istockphoto-1275833236-612x612_ysfjiv.jpg"
+            },
+            {
+                "type" : "image",
+                "url" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724658343/istockphoto-464586322-612x612_snmyz4.jpg"
+            },
+            {
+                "type" :"image",
+                "url" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724655862/istockphoto-1275678497-612x612_v6x9qi.jpg"
+            }
+        ] ,
+        "speciality": ["furniture painting"]
+        
+    }
+
+]
