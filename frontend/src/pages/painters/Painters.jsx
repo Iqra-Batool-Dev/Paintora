@@ -35,7 +35,7 @@ function Painters() {
         {/* category buttons */}
         <div className={`  w-[100%] flex flex-wrap gap-2 `}>
         {
-            categories.map((category, index)=>(
+            categories.map((category, index)=>( 
                 <button className={`px-3 py-2 text-[0.9rem] font-semibold hover:bg-gray-300 rounded-full  bg-gray-200 `} key={index} value={category}  onClick={(e)=>handleButton(e)}>
                 {category}
                 </button>
