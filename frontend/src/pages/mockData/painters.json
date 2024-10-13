@@ -113,7 +113,7 @@
         "id" : 6,
         "name" : "John deo",
         "avatar" : "https://res.cloudinary.com/doo11wfdb/image/upload/v1724134289/istockphoto-1214267396-612x612_dtrt7s.jpg",
-        "location" : "Faisalabad, Punjab Pakistan",
+        "location" : "Faisalabad",
         "media" : [
             {
                 "type" : "video",
