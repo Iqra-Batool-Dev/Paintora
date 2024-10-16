@@ -10,10 +10,15 @@ import Search from './pages/Search/Search.jsx'
 import Inspiration from './pages/inspiration/Inspiration.jsx'
 import PostDetails from './pages/postDetails/PostDetails.jsx'
 import Painters from './pages/painters/Painters.jsx'
-
+import CreatePost from './pages/createPost/CreatePost.jsx'
+import Chat from './components/chat/chat.jsx'
+import UserProfile from './pages/userProfile/UserProfile.jsx'
+import EditProfile from './pages/editProfile/EditProfile.jsx'
+import { UserProvider } from './utils/UserContext.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
+  
   <Route path='/' element={<App/>}>
     <Route path='' element ={<Home/>}/>
     <Route path='signup' element = {<Signup/>}/>
@@ -22,13 +27,20 @@ const router = createBrowserRouter(
     <Route path='/inspiration' element = {<Inspiration/>}/>
     <Route path= '/post/:postId' element={<PostDetails/>}/>
     <Route path= '/painters' element= {<Painters/>}/>
+    <Route path='/create' element = {<CreatePost/>}/>
+    <Route path='/messages' element = {<Chat/>}/>
+    <Route path='/profile' element= {<UserProfile/>}/>
+    <Route path="/editProfile" element={<EditProfile />} />
   </Route>
+  
     
   )
 )
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider  router = {router}/>
+    <UserProvider>  {/* Wrap RouterProvider with UserProvider */}
+      <RouterProvider router={router} />
+    </UserProvider>
   </React.StrictMode>,
 )
 

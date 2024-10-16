@@ -56,7 +56,7 @@ function Navbar() {
               </li>
               <li>
                 <NavLink
-                  to="/professional"
+                  to="/create"
                   className={({ isActive }) =>
                     `text-[1rem]  font-semibold px-3 py-3  hover:text-gray-400
                                     ${
@@ -127,7 +127,7 @@ function Navbar() {
         <ul className=" flex flex-col w-full items-start ">
             <li className=" py-2 px-2 w-full border-0 rounded-md hover:bg-gray-200">
             <NavLink
-                to="/find"
+                to="/painters"
                 className={({ isActive }) =>
                 ` text-[1rem]  font-semibold   
                 ${isActive? "text-secondary-500 ": " text-black "} `}
@@ -154,7 +154,7 @@ function Navbar() {
           </li>
           <li className=" py-2 px-2 w-full border-0 rounded-md hover:bg-gray-200">
             <NavLink
-              to="/professional"
+              to="/create"
               className={({ isActive }) =>
                 `text-[1rem]  font-semibold  
                                     ${
@@ -165,7 +165,7 @@ function Navbar() {
               }
               onClick={() => setIsOpen(!isOpen)}
             >
-              become painter
+              Share work
             </NavLink>
           </li>
           <li className=" py-2 px-2 w-full border-0 rounded-md hover:bg-gray-200 ">

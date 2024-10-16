@@ -7,7 +7,8 @@ import linkedIn from "../../assets/icons/linkedIn.svg"
 
 function Footer() {
     return (
-    <footer className=" w-[100%] max-h-fit flex flex-col border-t-[1px]  py-3 px-2">
+        <div >
+    <footer className=" w-[100%] h-[80px] flex flex-col border-t-[1px]  py-3 px-2 ">
         <div className=" flex flex-col gap-2 md:flex-row md:justify-around  items-center">
         <div className="">
         <Link to="/" className=" flex items-center">
@@ -34,7 +35,7 @@ function Footer() {
             inspiration
         </Link>
         <Link
-            to="/find"
+            to="/create"
             className={` text-[1rem]   px-3 py-3  text-black hover:text-gray-400 `}
         >
             Show Talent
@@ -57,7 +58,8 @@ function Footer() {
         </div>
         
     </footer>
-    );
+    </div>
+    )
 }
 
 export default Footer;
