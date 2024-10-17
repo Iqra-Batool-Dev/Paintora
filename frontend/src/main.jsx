@@ -15,6 +15,7 @@ import Chat from './components/chat/chat.jsx'
 import UserProfile from './pages/userProfile/UserProfile.jsx'
 import EditProfile from './pages/editProfile/EditProfile.jsx'
 import { UserProvider } from './utils/UserContext.jsx'
+import About from './components/about/About.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +32,7 @@ const router = createBrowserRouter(
     <Route path='/messages' element = {<Chat/>}/>
     <Route path='/profile' element= {<UserProfile/>}/>
     <Route path="/editProfile" element={<EditProfile />} />
+    <Route path='/profile/about' element= {<About/>}/>
   </Route>
   
     

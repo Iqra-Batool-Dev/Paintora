@@ -10,7 +10,7 @@ function Navbar() {
  
   
   return (
-    <header className="w-[100%] bg-white sticky top-0 left-0 font-Montserrat z-50">
+    <header className=" min-w-full bg-white sticky top-0 left-0 font-Montserrat z-50">
       <nav className=" p-3 border-b-[1px] w-[100%]">
         <div className=" flex flex-row justify-between items-center w-[100%]">
           {/* Mobile Menu button  */}

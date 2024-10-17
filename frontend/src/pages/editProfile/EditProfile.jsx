@@ -95,8 +95,8 @@ console.log(...tags)
     <div className="p-8 w-[100%] mx-auto flex flex-col md:flex-row  justify-center items-start gap-10 min-h-[100vh]">
     <div className='flex flex-col md:w-[80%] max-w-3xl'>
 
-    <div className="flex items-center space-x-4 my-7">
-        <div className="w-20 h-20 bg-orange-400 rounded-full flex items-center justify-center text-white text-2xl">
+    <div className="flex flex-col md:flex-row items-center space-x-4 my-7">
+        <div className="w-20 h-20 bg-orange-400 rounded-full flex  items-center justify-center text-white text-2xl">
           {user.profilePicture ? (
             <img
               src={user.profilePicture}
@@ -223,8 +223,8 @@ console.log(...tags)
       <label htmlFor="" className='font-bold text-[1rem] text-black/70'>Email</label>
         <input
           type="email"
-          name="gmail"
-          value={formData.gmail}
+          name="email"
+          value={formData.email}
           onChange={handleChange}
           className="w-full p-2 border outline-none rounded-md text-[0.9rem] text-gray-500 hover:border-gray-300 focus:border-gray-300"
           placeholder="user@gmail.com"
@@ -277,7 +277,7 @@ console.log(...tags)
 
     {/* Social Links section start here */}
     {selectedTab === 'add social links' && (
-    <div className=' space-y-6'>
+    <div className=' space-y-6 '>
     <div>
       <label htmlFor="" className='font-bold text-[1rem] text-black/70'>Facebook</label>
         <input
@@ -311,6 +311,17 @@ console.log(...tags)
           
         />
       </div>
+      <div>
+      <label htmlFor="" className='font-bold text-[1rem] text-black/70'>Whatsapp</label>
+        <input
+          type="text"
+          name="whatsapp"
+          value={formData.skills.whatsapp}
+          onChange={handleSocialLinksChange}
+          className="w-full p-2 border outline-none rounded-md text-[0.9rem] text-gray-500 hover:border-gray-300 focus:border-gray-300"
+          
+        />
+      </div>
     </div>
   )}
     {/* social links section ends here */}
@@ -324,7 +335,7 @@ console.log(...tags)
       </button>
       </div>
 
-      <div className='flex flex-col gap-2 p-8 items-start'>
+      <div className='flex flex-col gap-2 p-4 md:p-8 md:items-start items-center'>
         {['Edit Profile' , 'Change Email or Password', 'Add Social links'].map((tab) => (
           <button key={tab} 
             onClick={() => setSelectedTab(tab.toLowerCase())}

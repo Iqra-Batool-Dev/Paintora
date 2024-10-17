@@ -47,7 +47,7 @@ function Search() {
         </div>
 
         {/* posts section */}
-        <div className=' w-[100%] px-6 md:px-20 py-4  grid  grid-cols-1 md:grid-cols-4 gap-6  '>
+        <div className=' w-[100%] min-h-[100vh] px-6 md:px-20 py-4  grid  grid-cols-1 md:grid-cols-4 gap-6  '>
         {searchResults.length > 0 ? (
             displayPosts.map((result , index)=>{
                 const firstMedia = result.media[0]

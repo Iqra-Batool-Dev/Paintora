@@ -37,7 +37,7 @@ function Painters() {
 
 
     return (
-    <div className=' w-[100%] py-4 px-10'> 
+    <div className=' w-[100%] min-h-[100vh] py-4 px-10'> 
         <div className=' search-heading my-5 text-[1.8rem] text-black font-bold'>{searchHeading}</div>
 
         {/* category buttons */}

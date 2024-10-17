@@ -9,22 +9,51 @@ import linkedIn from "../../assets/icons/linkedIn.svg"
 
 function Signup() {
   // state for input fields
-  const [data, setData] = useState({
+  const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
+  const [errors, setErrors] = useState({})
+
   //function to handle the inputs
   const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    console.log(name, value);
-    setData((prev) => {
+    const name = e.target.name
+    const value = e.target.value
+    console.log(name, value)
+    setFormData((prev) => {
       return {
         ...prev,
         [name]: value,
-      };
-    });
+      }
+    })
+  }
+
+  const validate = () => {
+    let newErrors = {}
+
+    if (!formData.email) {
+      newErrors.email = 'Email is required'
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Email is invalid'
+    }
+    if (!formData.password) {
+      newErrors.password = 'Password is required'
+    } else if (formData.password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters'
+    }
+    return newErrors
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const validationErrors = validate()
+    setErrors(validationErrors)
+
+    if (Object.keys(validationErrors).length === 0) {
+      console.log('Form Submitted:', formData)
+      // Handle form submission (e.g., call API)
+    }
   };
 
   // function is ended
@@ -36,31 +65,35 @@ function Signup() {
 
       {/* right side form */}
       <div className=" w-full  p-10 flex flex-col items-center justify-center md:w-[50%] ">
-        <form action="" className="flex flex-col items-center w-[100%] h-fit ">
+        <form action="" onSubmit={handleSubmit} className="flex flex-col items-center w-[100%] h-fit ">
           <h1 className=" text-white text-center md:text-black text-[1.6rem] font-medium mb-4 ">
             Create Account
           </h1>
           <div className="w-[100%] mb-1">
-            <label htmlFor=""></label>
+            <label htmlFor="email"></label>
             <input
+              id="email"
               type="email"
               placeholder="Email"
               name="email"
-              value={data.email}
+              value={formData.email}
               onChange={handleChange}
-              className="w-full p-2 border-[2px] border-gray-200 rounded-lg outline-primary-300 hover:border-primary-400 my-2 bg-transparent text-[0.9rem] text-white md:text-black"
+              className={`w-full p-2 border-[2px] ${errors.email ? 'border-red-500' : 'border-gray-200'} border-gray-200 rounded-lg outline-primary-300 hover:border-primary-400 my-2 bg-transparent text-[0.9rem] text-white md:text-black`}
             />
+            {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
           </div>
           <div className="w-[100%] mb-1">
-            <label htmlFor=""></label>
+            <label htmlFor="password"></label>
             <input
+              id="password"
               type="password"
               placeholder="Password"
               name="password"
-              value={data.password}
+              value={formData.password}
               onChange={handleChange}
-              className="w-full p-2 border-[2px] border-gray-200 rounded-lg outline-primary-300 hover:border-primary-400 my-2 bg-transparent text-[0.9rem] text-white md:text-black"
+              className={`w-full p-2 border-[2px] ${errors.password ? 'border-red-500' : 'border-gray-200'} border-gray-200 rounded-lg outline-primary-300 hover:border-primary-400 my-2 bg-transparent text-[0.9rem] text-white md:text-black`}
             />
+            {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
           </div>
           <button
             type="submit"
