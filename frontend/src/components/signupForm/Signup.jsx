@@ -10,56 +10,61 @@ import linkedIn from "../../assets/icons/linkedIn.svg"
 function Signup() {
   // state for input fields
   const [formData, setFormData] = useState({
+    name: "",
     email: "",
-    password: "",
+    password: ""
   });
 
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState({
+    name: '',
+    email: '',
+    password: '',
+
+  })
 
   //function to handle the inputs
   const handleChange = (e) => {
-    const name = e.target.name
-    const value = e.target.value
-    console.log(name, value)
-    setFormData((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      }
-    })
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
+    console.log(formData)
   }
 
-  const validate = () => {
+  const validateForm = () => {
     let newErrors = {}
-
+    let isValid = true
+    if (!formData.name.trim()) {
+      isValid = false
+      newErrors.name = 'Name is required';
+    }
     if (!formData.email) {
+      isValid = false
       newErrors.email = 'Email is required'
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email is invalid'
     }
     if (!formData.password) {
+      isValid = false
       newErrors.password = 'Password is required'
     } else if (formData.password.length < 6) {
+      isValid = false
       newErrors.password = 'Password must be at least 6 characters'
     }
-    return newErrors
+    setErrors(newErrors)
+    return isValid 
   };
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const validationErrors = validate()
-    setErrors(validationErrors)
-
-    if (Object.keys(validationErrors).length === 0) {
-      console.log('Form Submitted:', formData)
-      // Handle form submission (e.g., call API)
+    if (validateForm()) {
+      // Handle successful form submission
+      console.log('Form data submitted:', formData);
     }
-  };
+  }
 
   // function is ended
   return (
     <div className=" flex flex-col justify-center  ">
-    <div className=" w-[100%] h-[100vh]  flex flex-col  overflow-hidden bg-primary-800  md:rounded-[20px] shadow-xl md:h-[81vh] md:mx-auto md:my-5  md:bg-gray-50 md:w-[60%] md:flex-row ">
+    <div className=" w-[100%] h-[100vh]  flex flex-col  overflow-hidden bg-primary-800  md:rounded-[20px] shadow-xl md:h-[90vh] md:mx-auto md:my-5  md:bg-gray-50 md:w-[60%] md:flex-row ">
       {/* left side panel */}
       <SidePanel />
 
@@ -69,6 +74,19 @@ function Signup() {
           <h1 className=" text-white text-center md:text-black text-[1.6rem] font-medium mb-4 ">
             Create Account
           </h1>
+          <div className="w-[100%] mb-1">
+            <label htmlFor="userName"></label>
+            <input
+              id="userName"
+              type="text"
+              placeholder="User Name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className={`w-full p-2 border-[2px] ${errors.name ? 'border-red-500' : 'border-gray-200'} border-gray-200 rounded-lg outline-primary-300 hover:border-primary-400 my-2 bg-transparent text-[0.9rem] text-white md:text-black`}
+            />
+            {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+          </div>
           <div className="w-[100%] mb-1">
             <label htmlFor="email"></label>
             <input

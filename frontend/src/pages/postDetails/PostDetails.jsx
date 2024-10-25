@@ -39,7 +39,7 @@ function PostDetails() {
                   <FontAwesomeIcon icon={faBookmark} />
                 </button>
               </div>
-                <Link to={"/login"} className=' text-[0.7rem] md:text-[0.9rem] text-white font-semibold px-4  py-2  bg-accent-700 rounded-[20px] duration-100 hover:bg-primary-500 hover:text-white" '>
+                <Link to={"/login"} className=' text-[0.7rem] md:text-[0.9rem] text-white font-semibold px-4  py-2  bg-accent-600 rounded-[20px] duration-100 hover:bg-primary-500 hover:text-white '>
                 Get in touch
                 </Link>
               </div>

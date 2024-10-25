@@ -12,7 +12,7 @@ function About() {
 
     if (loading) return <p>Loading profile...</p>
   return (
-    <div className='flex  flex-col w-[100%] md:flex-row space-y-10 md:w-[80%] md:space-x-24 mx-auto'>
+    <div className='flex  flex-col w-[100%] p-6 md:flex-row space-y-10 md:w-[80%] md:space-x-24 mx-auto'>
       <div className='flex flex-col md:w-[60%] space-y-10'>
         <div className=' space-y-3'>
             <h2 className='text-[1rem] text-black font-semibold '>Biography</h2>

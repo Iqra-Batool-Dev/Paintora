@@ -2,6 +2,7 @@ import React , { useState }from 'react';
 import { useUser } from '../../utils/UserContext.jsx';
 import { useNavigate } from 'react-router-dom';
 import About from '../../components/about/About.jsx';
+import Comments from '../../components/Comments' 
 
 const UserProfile = () => {
   const [selectedTab, setSelectedTab] = useState('posts')
@@ -11,7 +12,7 @@ const UserProfile = () => {
   if (loading) return <p>Loading profile...</p>
 
   return (
-    <div className="p-10  w-[100%] mx-auto min-h-[100vh]">
+    <div className="md:p-10 py-10    w-[100%] mx-auto min-h-[100vh]">
       <div className="flex flex-col md:flex-row items-center justify-center space-y-3 md:space-x-20 max-w-3xl">
         <div className='flex flex-col md:flex-row space-x-2 items-center '>
         <div className=" w-16 h-16 md:w-20 md:h-20 bg-orange-400 rounded-full flex items-center justify-center text-white text-[1rem] md:text-[2rem]">
@@ -26,12 +27,12 @@ const UserProfile = () => {
           )}
         </div>
         <div>
-          <h1 className="text-2xl font-bold">{user.username}</h1>
+          <h1 className="text-2xl text-black/80 font-bold">{user.username}</h1>
           <p className="text-gray-500">{user.fullName}</p>
         </div>
         </div>
         <button
-          className=" bg-gray-100 py-2 px-4 rounded-md"
+          className="  text-white bg-primary-500 py-2 px-4 rounded-md"
           onClick={() => navigate('/editProfile')}
         >
           Edit Profile
@@ -39,8 +40,8 @@ const UserProfile = () => {
       </div>
 
       {/* Navigation Tabs */}
-      <div className="mt-8 flex space-x-4 border-b py-2">
-        {['Posts', 'Collections',  'About'].map((tab) => (
+      <div className=" w-[100%] flex md:flex-row flex-nowrap overflow-x-scroll md:overflow-visible  gap-3 border-b py-2 px-6 mt-6 ">
+        {['Posts', 'Collections',  'About' , 'Reviews'].map((tab) => (
           <button key={tab} 
             onClick={() => setSelectedTab(tab.toLowerCase())}
             className= {`py-2 px-4  
@@ -70,7 +71,15 @@ const UserProfile = () => {
         {/* the about component here */}
         {selectedTab === 'about' && (
           <About/>
-        )}
+        )       
+        }
+
+        {/* the about component here */}
+        {selectedTab === 'reviews' && (
+          <Comments/>
+        )       
+        }
+
 
       </div>
     </div>

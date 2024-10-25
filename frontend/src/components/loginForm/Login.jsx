@@ -7,24 +7,65 @@ import facebook from "../../assets/icons/facebook.svg"
 import linkedIn from "../../assets/icons/linkedIn.svg"
 
 function Login() {
+    const email= 'iqrabatool1532@gmail.com'
+  const pass= 'iqra123'
   // state for input fields
-  const [data, setData] = useState({
+  const [formData, setFormData] = useState({
     email: "",
-    password: "",
+    password: ""
   });
 
+  const [errors, setErrors] = useState({
+    email: '',
+    password: '',
+  })
+
   //function to handle the inputs
+  // Handle input change
   const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    console.log(name, value);
-    setData((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
+    console.log(formData)
+  }
+
+// Form validation function
+const validateForm = () => {
+  let isValid = true
+  const newErrors = {}
+
+  // Email validation
+  if (!formData.email) {
+    isValid = false
+    newErrors.email = 'Email is required'
+  }else if(formData.email !== email){
+    isValid=false
+    newErrors.email = 'please use correct email'
+  }else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    isValid = false
+    newErrors.email = 'Please enter a valid email'
+  }
+
+  // Password validation
+  if (!formData.password) {
+    isValid = false
+    newErrors.password = 'Password is required'
+  } else if (formData.password !== pass) {
+    isValid = false
+    newErrors.password = 'Password must match with old password'
+  }
+
+  setErrors(newErrors)
+  return isValid
+}
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (validateForm()) {
+      // Handle successful form submission
+      console.log('Form data submitted:', formData);
+    }
+  }
+
 
   // function is ended
   return (
@@ -35,31 +76,35 @@ function Login() {
 
       {/* right side form */}
       <div className=" w-full  p-10 flex flex-col items-center justify-center md:w-[50%] ">
-        <form action="" className="flex flex-col items-center w-[100%] h-fit ">
+        <form action="" onSubmit={handleSubmit} className="flex flex-col items-center w-[100%] h-fit ">
           <h1 className="text-white md:text-black text-[1.6rem] font-medium mb-4 ">
             Welcome Back
           </h1>
           <div className="w-[100%]">
-            <label htmlFor=""></label>
+            <label htmlFor="email"></label>
             <input
+              id="email"
               type="email"
               placeholder="Email"
               name="email"
-              value={data.email}
+              value={formData.email}
               onChange={handleChange}
-              className="w-full p-2 border-[2px] border-gray-200 rounded-lg outline-primary-300 hover:border-primary-400 my-2 bg-transparent text-[0.9rem] text-white md:text-black"
+              className={`w-full p-2 border-[2px] ${errors.email ? 'border-red-500' : 'border-gray-200'} border-gray-200 rounded-lg outline-primary-300 hover:border-primary-400 my-2 bg-transparent text-[0.9rem] text-white md:text-black`}
             />
+            {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
           </div>
           <div className="w-[100%] my-2">
-            <label htmlFor=""></label>
+            <label htmlFor="password"></label>
             <input
+              id="password"
               type="password"
               placeholder="Password"
               name="password"
-              value={data.password}
+              value={formData.password}
               onChange={handleChange}
-              className="w-full p-2 border-[2px] border-gray-200 rounded-lg outline-primary-300 hover:border-primary-400  bg-transparent text-[0.9rem] text-white md:text-black"
+              className={`w-full p-2 border-[2px] ${errors.password ? 'border-red-500' : 'border-gray-200'} border-gray-200 rounded-lg outline-primary-300 hover:border-primary-400 my-2 bg-transparent text-[0.9rem] text-white md:text-black`}
             />
+              {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
             <div className=" w-[100%] text-right ">
             <a href="#" className="  text-[0.9rem] text-white hover:text-primary-300 md:text-black md:hover:text-primary-900 ">
               Forgot Password?

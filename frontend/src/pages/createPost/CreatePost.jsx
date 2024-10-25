@@ -52,7 +52,7 @@ const handleUpload = () => {
     console.log(tags)
   return (
     <div className=" w-[100%] flex flex-col items-center border-[1px] ">
-      <div className=" w-[100%] md:w-[80%] bg-white p-8 md:shadow-md md:rounded-lg my-3 ">
+      <div className=" w-[100%] md:w-[80%] bg-white p-8 md:shadow-md  md:rounded-lg my-3 ">
         <h1 className="text-[1.5rem] font-bold mb-6 text-center w-[100%] text-black/80">
           Share your work here
         </h1>

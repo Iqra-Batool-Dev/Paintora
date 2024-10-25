@@ -3,6 +3,8 @@ import { useUser } from '../../utils/UserContext.jsx'
 import { useNavigate } from 'react-router-dom'
 
 const EditProfile = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [password , setPassword] = useState('')
   const [selectedTab, setSelectedTab] = useState('edit profile')
   const [tags, setTags] = useState([])
   const [inputTag, setInputTag] = useState('')
@@ -89,11 +91,33 @@ console.log(...tags)
     navigate('/profile');
   };
 
+  //validation for  of password on account deletion
+const validatePassword = ()=>{
+  let passwordError =''
+  if(password !== user.password){
+    passwordError = 'invalid password'
+  }
+   return passwordError
+}
+
+const handleAccountDelete = (e)=>{
+    e.preventDefault();
+    const validationErrors = validatePassword();
+    setError(validationErrors);
+    
+    if (validationErrors == '') {
+      setIsOpen(false);
+      setPassword('')
+    
+    } 
+}
+console.log(error)
+
   console.log(formData)
 
   return (
-    <div className="p-8 w-[100%] mx-auto flex flex-col md:flex-row  justify-center items-start gap-10 min-h-[100vh]">
-    <div className='flex flex-col md:w-[80%] max-w-3xl'>
+    <div className="px-8  py-4 w-[100%] mx-auto flex flex-col md:flex-row justify-center md:justify-between items-start gap-10 min-h-[100vh]">
+    <div className='flex flex-col md:p-6  md:w-[80%] max-w-3xl'>
 
     <div className="flex flex-col md:flex-row items-center space-x-4 my-7">
         <div className="w-20 h-20 bg-orange-400 rounded-full flex  items-center justify-center text-white text-2xl">
@@ -335,7 +359,8 @@ console.log(...tags)
       </button>
       </div>
 
-      <div className='flex flex-col gap-2 p-4 md:p-8 md:items-start items-center'>
+          {/* tabs  */}
+      <div className='flex flex-col gap-2 p-4 md:p-5 md:items-start items-center md:border md:rounded-md md:fixed md:top-[20%]  md:right-10'>
         {['Edit Profile' , 'Change Email or Password', 'Add Social links'].map((tab) => (
           <button key={tab} 
             onClick={() => setSelectedTab(tab.toLowerCase())}
@@ -348,6 +373,48 @@ console.log(...tags)
             {tab}
           </button>
         ))}
+        <button className='py-1 px-3 md:ml-2 bg-accent-600 hover:bg-accent-500 rounded-full text-[0.9rem] text-white'
+        onClick={() => setIsOpen(true)}
+        >
+        Delete Account
+        </button>
+        </div>
+
+        {/* delete account section */}
+        <div className={` ${isOpen ? "flex" : "hidden"} w-full h-full  flex-row justify-center  bg-black/20 backdrop-blur-sm  fixed top-16 left-0 `}>
+
+        <div className={`flex flex-col gap-4 p-7  w-[90%] h-[400px]  md:w-[50%] md:h-[300px] rounded-xl  absolute top-32    bg-blend-overlay bg-white border-[1px] shadow-md  text-text-400 `}>
+            <div className=' space-y-2'>
+            <h3 className='font-semibold text-xl'>
+            Are you sure you want to delete your account?</h3>
+            <p className='text-sm'>After deleting your account, all data and resources are permanently removed. Enter your password to confirm deletion.</p>
+            </div>
+            <div>
+            <label className="block text-sm font-medium text-gray-700">Enter your Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={(e)=>setPassword(e.target.value)}
+                  placeholder=''
+                  className={`mt-1 p-2 block w-full outline-none border ${error ? 'border-red-500' : 'border-gray-300'} border-gray-300  rounded-md hover:shadow-sm focus:shadow-sm  sm:text-sm`}
+                />
+                {error && <p className="text-red-500 text-sm">{error}</p>}
+            </div>
+            <div className='  flex flex-col md:flex-row md:justify-end items-center gap-4'>
+            <button className={`bg-gray-300  md:w-fit w-full rounded-md  text-text-400 text-sm   font-bold   font-roboto 	px-8	sm:px-8 py-3 hover:bg-gray-400`}
+            onClick={() => setIsOpen(false)}
+			      >
+              Cancel
+			      </button>
+            <button className={`bg-accent-600  md:w-fit w-full  rounded-md  text-primary-50 text-sm   font-bold   font-roboto 	px-8	sm:px-8 py-3 hover:bg-accent-500`}
+            onClick={handleAccountDelete}
+			      >
+              Delete Account
+			      </button>
+            </div>
+
+        </div>
         </div>
     </div>
   
