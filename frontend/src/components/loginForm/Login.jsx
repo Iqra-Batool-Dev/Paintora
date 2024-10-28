@@ -1,14 +1,17 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import SidePanel from "../SidePanel";
-import  painting from "../../assets/images/painting.png";
+import React, { useState } from "react"
+import { Link , useNavigate } from "react-router-dom"
+import { useUser } from "../../utils/UserContext"
+import axios from 'axios'
+import SidePanel from "../SidePanel"
+import  painting from "../../assets/images/painting.png"
 import Google from "../../assets/icons/google.svg"
 import facebook from "../../assets/icons/facebook.svg"
 import linkedIn from "../../assets/icons/linkedIn.svg"
 
 function Login() {
-    const email= 'iqrabatool1532@gmail.com'
-  const pass= 'iqra123'
+  const { user, updateUser } = useUser()
+  const navigate = useNavigate()
+
   // state for input fields
   const [formData, setFormData] = useState({
     email: "",
@@ -30,39 +33,41 @@ function Login() {
 
 // Form validation function
 const validateForm = () => {
-  let isValid = true
-  const newErrors = {}
+  let isValid = true;
+  const newErrors = {};
 
-  // Email validation
   if (!formData.email) {
-    isValid = false
-    newErrors.email = 'Email is required'
-  }else if(formData.email !== email){
-    isValid=false
-    newErrors.email = 'please use correct email'
-  }else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-    isValid = false
-    newErrors.email = 'Please enter a valid email'
+    isValid = false;
+    newErrors.email = "Email is required";
+  } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    isValid = false;
+    newErrors.email = "Please enter a valid email";
   }
 
-  // Password validation
   if (!formData.password) {
-    isValid = false
-    newErrors.password = 'Password is required'
-  } else if (formData.password !== pass) {
-    isValid = false
-    newErrors.password = 'Password must match with old password'
+    isValid = false;
+    newErrors.password = "Password is required";
   }
 
-  setErrors(newErrors)
-  return isValid
+  setErrors(newErrors);
+  return isValid;
 }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault()
     if (validateForm()) {
       // Handle successful form submission
+      // Handle successful form submission
+      const response = await axios.post('http://localhost:8000/api/v1/users/login', {
+        email: formData.email,
+        password: formData.password,
+      },{ withCredentials: true});
+      console.log(response.status)
+      console.log(response.data)
+      updateUser(response.data)
       console.log('Form data submitted:', formData);
+      navigate("/profile/:id")
+      
     }
   }
 

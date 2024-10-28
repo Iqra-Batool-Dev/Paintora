@@ -1,13 +1,33 @@
-import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import pLogo from "../../assets/images/pLogo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faMessage } from "@fortawesome/free-solid-svg-icons";
 import {SearchBar , MobileSearchBar} from "../SearchBar";
+import { useUser } from "../../utils/UserContext"
+import axios from "axios"
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [clicked , setClicked] = useState (false)
- 
+  const navigate = useNavigate()
+  const { user, updateUser } = useUser()
+  console.log(user)
+  //extracting user id from user
+  const userId= user
+  
+
+  
+
+  // Handle user logout
+  const handleLogout = async () => {
+    try {
+      await axios.post("http://localhost:8000/api/v1/users/logout", {}, { withCredentials: true })
+      updateUser(null)
+      navigate("/") // Redirect to home after logout
+    } catch (error) {
+      console.error("Logout failed:", error)
+    }
+  }
   
   return (
     <header className=" min-w-full bg-white sticky top-0 left-0 font-Montserrat z-50">
@@ -69,7 +89,7 @@ function Navbar() {
                   Share work
                 </NavLink>
               </li>
-              <li>
+              {/*  <li>
                 <NavLink
                   to="/about"
                   className={({ isActive }) =>
@@ -82,8 +102,8 @@ function Navbar() {
                   }
                 >
                   About Us
-                </NavLink>
-              </li>
+                </NavLink> 
+              </li> */}
             </ul>
           </div>
 
@@ -97,6 +117,23 @@ function Navbar() {
           </button>
 
           <div className=" flex flex-row  justify-between items-center gap-2 w-auto">
+          {user !== null ? (
+              <>
+                <Link
+                  to={`/profile/${userId}`}
+                  className="text-[1rem] font-semibold px-4 py-1 border-0 rounded-lg text-black/65 hover:bg-primary-50 "
+                >
+                  {user.data.user.username || "profile"} 
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="text-[1rem] text-primary-500 font-semibold px-4 py-1 border-[2px] border-primary-500 rounded-lg duration-100 hover:bg-primary-500 hover:text-white hidden lg:block"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
             <Link
               to="/login"
               className=" text-[1rem]  font-semibold px-4 py-1 border-0 rounded-lg text-black/65 hover:bg-primary-50 hidden lg:block"
@@ -109,6 +146,9 @@ function Navbar() {
             >
               SignUp
             </Link>
+            </>
+            )
+            }
           </div>
         </div>
       </nav>
@@ -187,6 +227,15 @@ function Navbar() {
         </ul>
         <hr />
         <div>
+        { user!==null ? (
+            <Link
+              to="/login"
+              className=" text-[1rem]  font-semibold px-4 py-2 border-0 rounded-lg hover:bg-gray-200"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              Logout
+            </Link>
+          ):(
             <Link
               to="/login"
               className=" text-[1rem]  font-semibold px-4 py-2 border-0 rounded-lg hover:bg-gray-200"
@@ -194,6 +243,8 @@ function Navbar() {
             >
               Login
             </Link>
+          )
+          }
         </div>
       </div>
       </div>

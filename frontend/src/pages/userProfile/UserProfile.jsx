@@ -6,9 +6,9 @@ import Comments from '../../components/Comments'
 
 const UserProfile = () => {
   const [selectedTab, setSelectedTab] = useState('posts')
-  const { user = {}, loading } = useUser();
+  const { user , loading } = useUser();
   const navigate = useNavigate();
-
+  const userData = user.data.user
   if (loading) return <p>Loading profile...</p>
 
   return (
@@ -16,19 +16,19 @@ const UserProfile = () => {
       <div className="flex flex-col md:flex-row items-center justify-center space-y-3 md:space-x-20 max-w-3xl">
         <div className='flex flex-col md:flex-row space-x-2 items-center '>
         <div className=" w-16 h-16 md:w-20 md:h-20 bg-orange-400 rounded-full flex items-center justify-center text-white text-[1rem] md:text-[2rem]">
-          {user.profilePicture ? (
+          {userData.avatar ? (
             <img
               src={user.profilePicture}
               alt="Profile"
               className="rounded-full w-full h-full object-cover"
             />
           ) : (
-            user.username[0]
+            userData.username[0]
           )}
         </div>
         <div>
-          <h1 className="text-2xl text-black/80 font-bold">{user.username}</h1>
-          <p className="text-gray-500">{user.fullName}</p>
+          <h1 className="text-2xl text-black/80 font-bold">{userData.username}</h1>
+          <p className="text-gray-500">{userData.fullName}</p>
         </div>
         </div>
         <button

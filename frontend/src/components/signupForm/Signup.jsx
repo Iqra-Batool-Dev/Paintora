@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link , useNavigate} from "react-router-dom";
+import axios from 'axios'
 import SidePanel from "../SidePanel";
 import  painting from "../../assets/images/painting.png";
 import Google from "../../assets/icons/google.svg"
@@ -8,15 +9,18 @@ import linkedIn from "../../assets/icons/linkedIn.svg"
 
 
 function Signup() {
+
+  const navigate = useNavigate()
+
   // state for input fields
   const [formData, setFormData] = useState({
-    name: "",
+    fullName: "",
     email: "",
     password: ""
   });
 
   const [errors, setErrors] = useState({
-    name: '',
+    fullName: '',
     email: '',
     password: '',
 
@@ -32,9 +36,9 @@ function Signup() {
   const validateForm = () => {
     let newErrors = {}
     let isValid = true
-    if (!formData.name.trim()) {
+    if (!formData.fullName.trim()) {
       isValid = false
-      newErrors.name = 'Name is required';
+      newErrors.fullName = 'Name is required';
     }
     if (!formData.email) {
       isValid = false
@@ -53,11 +57,24 @@ function Signup() {
     return isValid 
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault()
     if (validateForm()) {
       // Handle successful form submission
-      console.log('Form data submitted:', formData);
+      console.log('Form data submitted:', formData)
+
+      // handle submit with backend
+      try {
+        const response = await axios.post('http://localhost:8000/api/v1/users/register', formData, {withCredentials: true})
+        console.log('Response:', response.data)
+        alert(response.data.message) // Show success message to the user
+      } catch (error) {
+        console.error('Error:', error.response ? error.response.data : error.message)
+        alert('Signup failed. Please try again.')
+      }
+
+      navigate('/login')
+
     }
   }
 
@@ -79,13 +96,13 @@ function Signup() {
             <input
               id="userName"
               type="text"
-              placeholder="User Name"
-              name="name"
-              value={formData.name}
+              placeholder="Enter Name"
+              name="fullName"
+              value={formData.fullName}
               onChange={handleChange}
-              className={`w-full p-2 border-[2px] ${errors.name ? 'border-red-500' : 'border-gray-200'} border-gray-200 rounded-lg outline-primary-300 hover:border-primary-400 my-2 bg-transparent text-[0.9rem] text-white md:text-black`}
+              className={`w-full p-2 border-[2px] ${errors.fullName ? 'border-red-500' : 'border-gray-200'} border-gray-200 rounded-lg outline-primary-300 hover:border-primary-400 my-2 bg-transparent text-[0.9rem] text-white md:text-black`}
             />
-            {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+            {errors.fullName && <p className="text-red-500 text-sm">{errors.fullName}</p>}
           </div>
           <div className="w-[100%] mb-1">
             <label htmlFor="email"></label>

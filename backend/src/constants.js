@@ -1,1 +1,1 @@
-export const DB_NAME = "paintoradb"
+export const DB_NAME = 'paintoradb'

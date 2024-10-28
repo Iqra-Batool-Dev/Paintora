@@ -16,6 +16,8 @@ import UserProfile from './pages/userProfile/UserProfile.jsx'
 import EditProfile from './pages/editProfile/EditProfile.jsx'
 import { UserProvider } from './utils/UserContext.jsx'
 import About from './components/about/About.jsx'
+import { MessageProvider } from './utils/MessageContext.jsx'
+import Messages from './pages/messages/Messages.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,10 +31,10 @@ const router = createBrowserRouter(
     <Route path= '/post/:postId' element={<PostDetails/>}/>
     <Route path= '/painters' element= {<Painters/>}/>
     <Route path='/create' element = {<CreatePost/>}/>
-    <Route path='/messages' element = {<Chat/>}/>
-    <Route path='/profile' element= {<UserProfile/>}/>
+    <Route path='/profile/:id' element= {<UserProfile/>}/>
     <Route path="/editProfile" element={<EditProfile />} />
     <Route path='/profile/about' element= {<About/>}/>
+    <Route path= '/messages' element={<Messages/>}/>
   </Route>
   
     
@@ -41,7 +43,9 @@ const router = createBrowserRouter(
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <UserProvider>  {/* Wrap RouterProvider with UserProvider */}
-      <RouterProvider router={router} />
+      <MessageProvider>
+        <RouterProvider router={router} />
+      </MessageProvider>
     </UserProvider>
   </React.StrictMode>,
 )

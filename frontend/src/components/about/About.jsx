@@ -15,11 +15,11 @@ function About() {
     <div className='flex  flex-col w-[100%] p-6 md:flex-row space-y-10 md:w-[80%] md:space-x-24 mx-auto'>
       <div className='flex flex-col md:w-[60%] space-y-10'>
         <div className=' space-y-3'>
-            <h2 className='text-[1rem] text-black font-semibold '>Biography</h2>
+            <h2 className='text-[1rem] text-black/90 font-semibold '>Biography</h2>
             <p className='text-[0.9rem] text-black/80 font-medium'>{user.bio}</p>
         </div>
         <div className='space-y-3 '>
-        <h2 className='text-[1rem] text-black font-semibold '>Skills</h2>
+        <h2 className='text-[1rem] text-black/90 font-semibold '>Skills</h2>
             <div className='flex flex-row flex-wrap gap-4'>
             {user.skills.map((skill , index)=>(
                 <p key={index} className='bg-gray-100 rounded-lg  px-3 py-1 text-[0.9rem] '> {skill} </p>
@@ -39,7 +39,7 @@ function About() {
                 </div>
             </div>
             <div>
-                <h2 className='text-[1rem] text-black font-semibold'>Social</h2>
+                <h2 className='text-[1rem] text-black/90 font-semibold'>Social</h2>
                 
             </div>
       </div>

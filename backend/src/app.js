@@ -1,32 +1,32 @@
-import express from "express"
-import cors from "cors"
-import cookieParser from "cookie-parser"
-
+import express from 'express'
+import cookieParser from 'cookie-parser'
+import cors from 'cors'
+import passport from 'passport'
 
 const app = express()
 
+// configuring the cors
 app.use(cors({
-    origin : process.env.CORS_ORIGIN,
-    Credential : true
+    origin: process.env.CORS_ORIGIN,
+    credentials: true
 }))
 
-// express configurations
-app.use(express.json({limit: "16kb"}))
-app.use(express.urlencoded({extended:true }))
-app.use(express.static("public"))
+app.use(express.json({limit:'16kb'}))
+app.use(express.urlencoded({extended:true, limit:'16kb'}))
+app.use(express.static('public'))
 app.use(cookieParser())
 
+app.use(passport.initialize())
 
-// routes import 
-import userRouter from "./routes/user.routes.js"
+// routes imports
+import userRouter from './routes/user.routes.js'
+import postRouter from './routes/post.routes.js'
+import chatroomRouter from './routes/chatRoom.routes.js'
+// routes declaration
+app.use('/api/v1/users', userRouter)
+app.use('/api/v1/post', postRouter)
+app.use('/api/v1/chatroom',chatroomRouter)
 
 
-// routes declaration 
-app.use("/api/v1/users" , userRouter)     // http://localhost:8000/api/v1/users/
 
-
-
-
-
-
-export {app}
+export { app }

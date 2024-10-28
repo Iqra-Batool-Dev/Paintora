@@ -17,61 +17,62 @@ function Painters() {
     const [location , setLocation] = useState('')
     const [finalResults, setFinalResults] =useState([])
     
-        // function to handle category buttons
-        const handleButton = (value) => {
-            if (category !== value) {
-                setCategory(value); // Avoid setting state if the value is unchanged
-                setSearchHeading(value || 'All Painters');
-            }
-        }
-        // function to handle input change in search bar//
-        const handleSearchInputChange = (e) => {
-            setSearch(e.target.value)  
-        }
+        // Handle category button clicks using useCallback
+  const handleButton = useCallback((value) => {
+    if (category !== value) {
+      setCategory(value);
+      setSearchHeading(value || 'All Painters');
+    }
+  }, [category]);
 
-        // function to handle keydown on search bar
-        const handleSearchKeyDown = (e) => {
-            if (e.key === "Enter") {
-                // Trigger filtering by setting final results on Enter press
-                applyFilters()
-            }
-        }
-    
-        // function to handle location change
-        const handleLocation = (e) => {
-            const selectedLocation = e.target.value
-            console.log(selectedLocation)
-            setLocation(selectedLocation)
-        }
-        
-        // logic to filter the data based on the dependencies given in useEffect hook
-        const applyFilters= () => {
-            const filteredResults = paintersData.filter((painter) => {
-                const matchesCategory = category
-                    ? painter.speciality.some((value)=>value.toLowerCase().includes(category.toLowerCase()))
-                    : true
-    
-                // const matchesSearch = search
-                //     ? painter.name.toLowerCase().includes(search.toLowerCase()) ||
-                //         painter.speciality.some((skill) => skill.toLowerCase().includes(search.toLowerCase()))
-                //     : true
-    
-                const matchesLocation = location
-                    ? painter.location.toLowerCase().includes(location.toLowerCase())
-                    : true
-    
-                return matchesCategory  && matchesLocation
-            })
-    
-            setFinalResults(filteredResults) 
-        }
+  // Search input handler
+  const handleSearchInputChange = (e) => {
+    setSearch(e.target.value);
+  };
 
-        // Re-run filters whenever category, location, or search changes
-        useEffect(() => {
-            if (category || location) {
-                applyFilters(); // Only run when category or location changes
-            }
-        }, [category, location]);        
+  // Handle "Enter" key press to trigger search
+  const handleSearchKeyDown = (e) => {
+    if (e.key === "Enter") {
+      applyFilters(); // Trigger filtering on Enter
+    }
+  };
+
+  // Handle location change from select menu
+  const handleLocation = (e) => {
+    const selectedLocation = e.target.value;
+    setLocation(selectedLocation);
+  };
+
+  // Function to filter painters based on selected filters
+  const applyFilters = useCallback(() => {
+    const filteredResults = paintersData.filter((painter) => {
+      const matchesCategory = category
+        ? painter.speciality.some((value) =>
+            value.toLowerCase().includes(category.toLowerCase())
+          )
+        : true;
+
+      const matchesSearch = search
+        ? painter.name.toLowerCase().includes(search.toLowerCase()) ||
+          painter.speciality.some((skill) =>
+            skill.toLowerCase().includes(search.toLowerCase())
+          )
+        : true;
+
+      const matchesLocation = location
+        ? painter.location.toLowerCase().includes(location.toLowerCase())
+        : true;
+
+      return matchesCategory && matchesSearch && matchesLocation;
+    });
+
+    setFinalResults(filteredResults);
+  }, [category, search, location]);
+
+  // Re-run filters when category, location, or search changes
+  useEffect(() => {
+    applyFilters();
+  }, [category, search, location, applyFilters]);        
     
 
 
@@ -121,7 +122,7 @@ function Painters() {
         <option selected  className='text-gray-300  text-center'>Search by location</option>
             {citiesData.map((city , index)=>(    
                 <option 
-                    
+                    value={city}
                     key={index} 
                     className=' text-[0.9rem] ' 
                     defaultValue="location" 
