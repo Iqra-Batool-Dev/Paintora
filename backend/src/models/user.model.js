@@ -43,9 +43,11 @@ const userSchema = new Schema({
         type: String,
         // required: true
     },
-    refreshToken: {
+    refreshToken: [
+        {
         type: String
-    },
+    }
+    ],
     portfolio: {
     type: Schema.Types.ObjectId,
     ref: 'Portfolio'

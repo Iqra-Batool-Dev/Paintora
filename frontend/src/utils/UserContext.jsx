@@ -8,38 +8,27 @@ export const useUser = () => useContext(UserContext)
 export const UserProvider = ({ children }) => {
 
   
-  const [user, setUser] = useState(null)
-  
+  const [user, setUser] = useState({
+    _id: '',
+    username: '',
+    email: '',
+    password: '',
+    fullName: '',
+    avatar: '',
+    location: '',
+    bio: '',
+    skills: [] ,
+    socialLinks: {facebook: '' , instagram: '', linkedIn: '' , whatsapp: ''}
+  })
+
   // Function to update user data in the context
   const updateUser = (newUserData) => {
     setUser((prev) => ({ ...prev, ...newUserData }))
-    console.log(newUserData)
-    const userId = newUserData.data.user._id
-    console.log(userId) 
   }
+  
+  console.log(user)
 
-
-    // Function to refresh the access token
-  const refreshAccessToken = async () => {
-    try {
-      const response = await axios.post('http://localhost:8000/api/v1/users/refresh-token', {}, { withCredentials: true });
-      const newAccessToken = response.data.accessToken;
-
-      // Update the user with the new token
-      updateUser({ accessToken: newAccessToken });
-      console.log('Token refreshed:', newAccessToken);
-    } catch (error) {
-      console.error('Failed to refresh token:', error);
-      // Optional: Handle logout if refresh fails
-    }
-  };
-
-  useEffect(()=>{
-    refreshAccessToken()
-  }, [])
-
-
-
+  
   
   return (
     <UserContext.Provider value={{ user, updateUser }}>
@@ -51,24 +40,39 @@ export const UserProvider = ({ children }) => {
 
 
 
-// const fetchUserData = async () => {
-//   try {
-//     const token = localStorage.getItem('token')
-//     console.log(token)
-//     if(!token) return 
-//     const response = await axios.get('http://localhost:8000/api/v1/users/me', {
-//       headers: { Authorization: `Bearer ${token}` },
-//     })
 
-//     setUser(response.data); // Update context with user data
+
+
+
+
+
+
+
+//   // Function to refresh the access token
+// const refreshAccessToken = async () => {
+//   try {
+//     const response = await axios.post('http://localhost:8000/api/v1/users/refresh-token', {}, { withCredentials: true });
+//     const newAccessToken = response.data.data.accessToken;
+//     console.log(response)
+//     // Update the user with the new token
+//     updateUser(response.data);  ////
+    
+//     console.log('Token refreshed:', newAccessToken);
 //   } catch (error) {
-//     console.error('Failed to fetch user data', error)
+//     console.error('Failed to refresh token:', error);
+//     setUser(null) //logout user 
 //   }
-// }
+//   finally {
+//     setLoading(false)  // Stop the loading state
+//   }
+// };
 
 // useEffect(() => {
-//   fetchUserData() // Fetch user data on component mount
-// }, [])
+//   const timer = setTimeout(() => refreshAccessToken(), 500);  // Wait 500ms
+//   return () => clearTimeout(timer);
+// }, []);
+
+
 
 
 

@@ -1,34 +1,36 @@
-import React , { useState }from 'react';
-import { useUser } from '../../utils/UserContext.jsx';
+import React , { useState , useEffect , useContext }from 'react';
+import {useUser} from '../../utils/UserContext.jsx';
 import { useNavigate } from 'react-router-dom';
 import About from '../../components/about/About.jsx';
 import Comments from '../../components/Comments' 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPerson, faUser } from "@fortawesome/free-solid-svg-icons";
 
 const UserProfile = () => {
   const [selectedTab, setSelectedTab] = useState('posts')
-  const { user , loading } = useUser();
+  const { user, updateUser } = useUser();
+
   const navigate = useNavigate();
-  const userData = user.data.user
-  if (loading) return <p>Loading profile...</p>
+  
 
   return (
     <div className="md:p-10 py-10    w-[100%] mx-auto min-h-[100vh]">
       <div className="flex flex-col md:flex-row items-center justify-center space-y-3 md:space-x-20 max-w-3xl">
         <div className='flex flex-col md:flex-row space-x-2 items-center '>
         <div className=" w-16 h-16 md:w-20 md:h-20 bg-orange-400 rounded-full flex items-center justify-center text-white text-[1rem] md:text-[2rem]">
-          {userData.avatar ? (
+          {user.avatar ? (
             <img
-              src={user.profilePicture}
+              src={user.avatar}
               alt="Profile"
               className="rounded-full w-full h-full object-cover"
             />
           ) : (
-            userData.username[0]
+            user.username[0] || <FontAwesomeIcon icon={faUser}/>
           )}
         </div>
         <div>
-          <h1 className="text-2xl text-black/80 font-bold">{userData.username}</h1>
-          <p className="text-gray-500">{userData.fullName}</p>
+          <h1 className="text-2xl text-black/80 font-bold">{user.username || "name"}</h1>
+          <p className="text-gray-500">{user.fullName || "fullname"}</p>
         </div>
         </div>
         <button

@@ -24,7 +24,7 @@ const getOrCreateChatRoom = asyncHandler(async (req, res) => {
     const newRoom = await ChatRoom.create({
         participants: userIds
     })
-    const populatedRoom = await ChatRoom.findById(newRoom_id).populate('participate', 'username fullName')
+    const populatedRoom = await ChatRoom.findById(newRoom._id).populate('participate', 'username fullName')
     return res
             .status(200)
             .json(

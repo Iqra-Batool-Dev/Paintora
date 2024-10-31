@@ -1,19 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import pLogo from "../../assets/images/pLogo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faMessage } from "@fortawesome/free-solid-svg-icons";
 import {SearchBar , MobileSearchBar} from "../SearchBar";
-import { useUser } from "../../utils/UserContext"
+import {useUser} from "../../utils/UserContext"
 import axios from "axios"
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [clicked , setClicked] = useState (false)
   const navigate = useNavigate()
   const { user, updateUser } = useUser()
+  
   console.log(user)
-  //extracting user id from user
-  const userId= user
+
+
+
+  if (!user) console.log('not get the user')
+  // //extracting user id from user
+  const userId = user._id
+  // const userId = "hgjghfj"
+  
+  // console.log(userId)
   
 
   
@@ -120,10 +128,16 @@ function Navbar() {
           {user !== null ? (
               <>
                 <Link
+                  to='/messages'
+                  className="text-[1rem] font-semibold px-4 py-1 border-0 rounded-full text-black/65 hover:bg-primary-50 "
+                >
+                  <FontAwesomeIcon icon={faMessage}/> 
+                </Link>
+                <Link
                   to={`/profile/${userId}`}
                   className="text-[1rem] font-semibold px-4 py-1 border-0 rounded-lg text-black/65 hover:bg-primary-50 "
                 >
-                  {user.data.user.username || "profile"} 
+                  {user.username || "profile"} 
                 </Link>
                 <button
                   onClick={handleLogout}

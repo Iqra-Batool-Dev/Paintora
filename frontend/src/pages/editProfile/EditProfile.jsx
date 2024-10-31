@@ -1,5 +1,6 @@
 import React, { useState , useEffect } from 'react'
 import { useUser } from '../../utils/UserContext.jsx'
+
 import { useNavigate } from 'react-router-dom'
 
 const EditProfile = () => {
@@ -17,7 +18,8 @@ const EditProfile = () => {
   }) // State for password changes
   const [error, setError] = useState('')
   const navigate = useNavigate();
-  
+
+
 
 
 /// functionality to handle skills tags
@@ -88,7 +90,7 @@ console.log(...tags)
     // Call updateUser from context and navigate back to profile
 
     updateUser(formData);
-    navigate('/profile');
+    navigate(`/editProfile`)
   };
 
   //validation for  of password on account deletion
@@ -121,9 +123,9 @@ console.log(error)
 
     <div className="flex flex-col md:flex-row items-center space-x-4 my-7">
         <div className="w-20 h-20 bg-orange-400 rounded-full flex  items-center justify-center text-white text-2xl">
-          {user.profilePicture ? (
+          {user.avatar ? (
             <img
-              src={user.profilePicture}
+              src={user.avatar}
               alt="Profile"
               className="rounded-full w-full h-full object-cover"
             />
@@ -143,7 +145,7 @@ console.log(error)
           type="file"
           name="profilePicture"
           onChange={(e) =>
-            setFormData({ ...formData, profilePicture: URL.createObjectURL(e.target.files[0]) })
+            setFormData({ ...formData, avatar: URL.createObjectURL(e.target.files[0]) })
           }
           className="w-full p-2 border outline-none rounded-md text-[0.9rem] text-gray-500 hover:border-gray-300 focus:border-gray-300"
         />

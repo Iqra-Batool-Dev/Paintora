@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { logOutUser, loginUser, refreshAccessToken, registerUser, updateSocialLinks, updateUserDetails, updateUserPassword,} from "../controllers/user.controller.js";
+import { checkAuth, logOutUser, loginUser, refreshAccessToken, registerUser, updateSocialLinks, updateUserDetails, updateUserPassword,} from "../controllers/user.controller.js";
 import passport from 'passport';
 import '../auth/passport.js'; 
 import {verifyJWT} from '../middlewares/auth.middleware.js'
@@ -16,11 +16,11 @@ router.route('/social-links').put(verifyJWT, updateSocialLinks)
 // User login route
 router.route('/login').post(loginUser) 
 
-// route to fetch data after logged in user 
-router.route('/me').get(verifyJWT, (req, res) => {
-    // 'req.user' will contain user data from the verified JWT
-    res.json(req.user);
-  })
+// // route to fetch data after logged in user 
+// router.route('/me').get(verifyJWT, (req, res) => {
+//     // 'req.user' will contain user data from the verified JWT
+//     res.json(req.user);
+//   })
 
 
 // Google Authentication
@@ -55,6 +55,7 @@ router.get('/google/callback', passport.authenticate('google', { session: false 
 
 // Secure routes
 router.route('/logout').post(verifyJWT, logOutUser)
+router.route('/check-auth').get(verifyJWT,checkAuth)
 router.route('/refresh-token').post(refreshAccessToken)
 
 

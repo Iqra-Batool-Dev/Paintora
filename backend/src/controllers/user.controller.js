@@ -131,8 +131,9 @@ const logOutUser = asyncHandler( async(req, res) => {
 })
 
 const refreshAccessToken = asyncHandler(async (req, res) => {
+    console.log('Cookies:', req.cookies)
     const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken
-
+    
     if(!incomingRefreshToken) {
         throw new ApiError(401, "unauthorized request")
     }
@@ -142,27 +143,28 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
             process.env.REFRESH_TOKEN_SECRET
         )
     
-        const user = await User.findOne(decodedToken?._id)
+        const user = await User.findById(decodedToken?._id)
         if(!user) {
             throw new ApiError(401, "Invalid refresh token")
         }
     
-        if(incomingRefreshToken !== user.refreshToken) {
+        if(!user.refreshToken.includes(incomingRefreshToken)) {
             throw new ApiError(401, "Refresh token is expired or used")
         }
     
         const options = {
             httpOnly: true,
             secure: true,
-            sameSite: 'strict'
+            sameSite : 'none'
+            
         }
     
         const {accessToken, refreshToken} = await generateAccessTokenAndRefreshToken(user._id)
         return res
         .status(200)
         .cookie('accessToken', accessToken , options)
-        .cookie('refreshToken', refreshToken, options)
-        .json(new ApiResponse(200,{accessToken,refreshToken}, 'Access token refreshed successfully'))
+        .cookie('refreshToken', refreshToken, options )
+        .json(new ApiResponse(200,{ user, accessToken,refreshToken}, 'Access token refreshed successfully'))
     } catch (error) {
         throw new ApiError(401, error?.message || 'Invalid refresh token')
     }
@@ -279,10 +281,17 @@ const updateSocialLinks = asyncHandler(async (req, res) => {
     });
 });
 
+const checkAuth = asyncHandler( async (req, res) => {
+    res
+        .status(200)
+        .json(new ApiResponse(200,'','User login successfully'))
+})
+
 export {registerUser,
         loginUser,
         logOutUser,
         refreshAccessToken,
         updateUserPassword,
         updateUserDetails,
-        updateSocialLinks};
+        updateSocialLinks,
+        checkAuth};

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState , useContext} from "react"
 import { Link , useNavigate } from "react-router-dom"
 import { useUser } from "../../utils/UserContext"
 import axios from 'axios'
@@ -56,17 +56,17 @@ const validateForm = () => {
   const handleSubmit = async(e) => {
     e.preventDefault()
     if (validateForm()) {
-      // Handle successful form submission
-      // Handle successful form submission
       const response = await axios.post('http://localhost:8000/api/v1/users/login', {
         email: formData.email,
         password: formData.password,
       },{ withCredentials: true});
       console.log(response.status)
-      console.log(response.data)
-      updateUser(response.data)
+      if(response.status === 200){
+      console.log(response.data.data.user)
+      updateUser(response.data.data.user)
+      navigate("/inspiration")
+    }
       console.log('Form data submitted:', formData);
-      navigate("/profile/:id")
       
     }
   }
