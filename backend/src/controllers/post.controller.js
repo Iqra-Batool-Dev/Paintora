@@ -156,7 +156,7 @@ const savePost = asyncHandler(async (req, res) => {
 // Get posts by user
 const getPostsByUser = asyncHandler(async (req, res) => {
     const posts = await Post.find({ user: req.params.userId }).populate('user', 'fullName avatar');
-
+    console.log("posts")
     if (!posts || posts.length === 0) {
         throw new ApiError(404, 'No posts found for this user');
     }

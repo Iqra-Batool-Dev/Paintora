@@ -4,13 +4,32 @@ import { useNavigate } from 'react-router-dom';
 import About from '../../components/about/About.jsx';
 import Comments from '../../components/Comments' 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPerson, faUser } from "@fortawesome/free-solid-svg-icons";
+import {  faUser } from "@fortawesome/free-solid-svg-icons";
+import axios from 'axios';
 
 const UserProfile = () => {
   const [selectedTab, setSelectedTab] = useState('posts')
+  const [userPosts, setUserPosts] = useState([])
   const { user, updateUser } = useUser();
-
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserPosts = async () => {
+      try {
+        // const response = await axios.get(`http://localhost:8000/api/v1/post/user/${user._id}`)
+        const response = await axios.get(`http://localhost:8000/api/v1/post/user/671e815326af969f18da87ab`)
+        console.log(response)
+        setUserPosts(response.data.data); // Assuming posts are in `data` field
+        
+      } catch (error) {
+        console.error("Error fetching user's posts:", error);
+      }
+    };      
+
+    if (user?._id && selectedTab === 'posts') {
+      fetchUserPosts();
+    }
+  }, [user?._id, selectedTab]);
   
 
   return (
@@ -62,7 +81,22 @@ const UserProfile = () => {
         {/* <p>Here will go the user's posts or other selected content.</p> */}
         {/* the posts component here */}
         {selectedTab === 'posts' && (
-          <div></div>
+          <div>
+          {userPosts.length > 0 ? (
+            userPosts.map((post) => (
+                <div key={post._id} className="post">
+                    <h3>{post.title}</h3>
+                    <p>{post.description}</p>
+                    {/* Display media if available */}
+                    {post.media && post.media.map((mediaItem, index) => (
+                        <img key={index} src={mediaItem.url} alt="Post media" className="post-media" />
+                    ))}
+                </div>
+            ))
+        ) : (
+            <p>No posts available.</p>
+        )}
+          </div>
         )}
 
         {/* the collection component here */}

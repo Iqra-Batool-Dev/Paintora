@@ -1,6 +1,8 @@
 import React from 'react'
-import { useState } from "react"
-import { Link } from 'react-router-dom'
+import { useState  } from "react"
+import { Link , useNavigate } from 'react-router-dom'
+import axios from "axios"
+
 
 const CreatePost = () => {
 
@@ -9,6 +11,7 @@ const CreatePost = () => {
     const [description , setDescription] = useState('')
     const [tags, setTags] = useState([])
     const [inputTag, setInputTag] = useState('')
+    const navigate = useNavigate()
     
     console.log(description)
     
@@ -40,9 +43,29 @@ const CreatePost = () => {
     }
 
 
-const handleUpload = () => {
-    // Perform your upload logic here, such as sending files to a backend
-    console.log("Uploading files:", files)
+const handleUpload = async(e) => {
+    // // Perform your upload logic here, such as sending files to a backend
+    // console.log("Uploading files:", files)
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    tags.forEach((tag) => formData.append("tags[]", tag));
+    files.forEach((file) => formData.append("media", file)); // Add media files
+
+    try {
+      const response = await axios.post("http://localhost:8000/api/v1/post/", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true, // Include if using cookies for auth
+      });
+      console.log(response.data);
+      navigate("/inspiration"); // Redirect or show success message
+    } catch (error) {
+      console.error("Error creating post:", error);
+    }
+
   }
 
     const handleCancel= ()=>{
@@ -52,7 +75,7 @@ const handleUpload = () => {
     console.log(tags)
   return (
     <div className=" w-[100%] flex flex-col items-center border-[1px] ">
-      <div className=" w-[100%] md:w-[80%] bg-white p-8 md:shadow-md  md:rounded-lg my-3 ">
+      <form onSubmit={handleUpload} className=" w-[100%] md:w-[80%] bg-white p-8 md:shadow-md  md:rounded-lg my-3 ">
         <h1 className="text-[1.5rem] font-bold mb-6 text-center w-[100%] text-black/80">
           Share your work here
         </h1>
@@ -236,11 +259,11 @@ const handleUpload = () => {
             >
             Cancel
             </button>
-            <Link className="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 text-[0.9rem] md:[1rem]" >
+            <button type='submit'  className="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 text-[0.9rem] md:[1rem]" >
             Continue
-            </Link>
+            </button>
         </div>
-        </div>
+        </form>
     </div>
     );
 }

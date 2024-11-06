@@ -3,7 +3,7 @@ import { ApiError } from '../utils/ApiError.js'
 import { User } from '../models/user.model.js'
 import { ApiResponse } from '../utils/ApiResponse.js'
 import jwt from 'jsonwebtoken'
-// import { uploadFileOnCloudinary } from '../utils/cloudinary.js'
+import { uploadFileOnCloudinary } from '../utils/cloudinary.js'
 
 
 const generateAccessTokenAndRefreshToken = async(userId) => {
@@ -173,7 +173,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 const updateUserPassword = asyncHandler(async (req, res) => {
     const userId = req.user._id; // Assuming you're using JWT and have middleware that attaches the user to the request
     const { oldPassword, newPassword } = req.body;
-
+console.log(oldPassword , newPassword)
     // Validate input fields
     if (!oldPassword || !newPassword) {
         throw new ApiError(400, "Old password and new password are required")
@@ -195,14 +195,16 @@ const updateUserPassword = asyncHandler(async (req, res) => {
     user.password = newPassword // Mongoose pre-save hook will take care of hashing
     await user.save()
 
+    console.log("password is updated")
     return res.status(200).json(new ApiResponse(200, {}, 'Password updated successfully'));
+
 });
 
 const updateUserDetails = asyncHandler(async (req, res) => {
     const userId = req.user._id; // Assuming you're using JWT and have middleware that attaches the user to the request
     const { username, skills, bio, location } = req.body;
-    const avatarLocalPath = req.files?.avatar[0]?.path
-
+    const avatarLocalPath = req.files?.avatar?.[0]?.path
+    console.log('this is local path', avatarLocalPath)
     // Validate input
     if (!username && !avatarLocalPath && !skills && !bio && !location) {
         throw new ApiError(400, "At least one field (username, avatar, skills,) is required for update");
@@ -256,10 +258,11 @@ const updateUserDetails = asyncHandler(async (req, res) => {
 });
 
 const updateSocialLinks = asyncHandler(async (req, res) => {
+    console.log('this is running')
     const userId = req.user._id; // Get user ID from the request (assumes user is authenticated)
 
     const { facebook, instagram, linkedin, whatsapp } = req.body; // Destructure social links from the request body
-
+    console.log('This is from sciallinks', req.body)
     // Find the user by ID
     const user = await User.findById(userId);
     if (!user) {
@@ -287,6 +290,23 @@ const checkAuth = asyncHandler( async (req, res) => {
         .json(new ApiResponse(200,'','User login successfully'))
 })
 
+const deleteUser = asyncHandler( async (req , res) => {
+    const userId = req.user._id
+    await User.findByIdAndDelete(userId)
+    res.status(200).json('Successfully Delete')
+})
+
+const userProfile = asyncHandler( async (req, res) => {
+    const userId = req.user._id
+    const user = await User.findById(userId).select('-password -refreshToken')
+    if(!user) {
+        throw new ApiError(404, 'User not found')
+    }
+    return res
+            .status(200)
+            .json(new ApiResponse(200,user))
+})
+
 export {registerUser,
         loginUser,
         logOutUser,
@@ -294,4 +314,6 @@ export {registerUser,
         updateUserPassword,
         updateUserDetails,
         updateSocialLinks,
-        checkAuth};
+        checkAuth,
+        deleteUser,
+        userProfile};

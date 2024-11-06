@@ -19,9 +19,7 @@ function Navbar() {
   if (!user) console.log('not get the user')
   // //extracting user id from user
   const userId = user._id
-  // const userId = "hgjghfj"
-  
-  // console.log(userId)
+
   
 
   
@@ -125,7 +123,7 @@ function Navbar() {
           </button>
 
           <div className=" flex flex-row  justify-between items-center gap-2 w-auto">
-          {user !== null ? (
+          {userId !== null ? (
               <>
                 <Link
                   to='/messages'

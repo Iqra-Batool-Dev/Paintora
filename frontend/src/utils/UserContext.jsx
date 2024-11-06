@@ -26,7 +26,19 @@ export const UserProvider = ({ children }) => {
     setUser((prev) => ({ ...prev, ...newUserData }))
   }
   
-  console.log(user)
+  // Fetch profile data from the backend on component mount
+useEffect(() => {
+  const fetchProfile = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/api/v1/users/profile', { withCredentials: true }) 
+      setUser(response.data.data)
+    } catch (error) {
+      console.error('Error fetching profile data:', error)
+    }
+  }
+
+  fetchProfile()
+}, [])
 
   
   

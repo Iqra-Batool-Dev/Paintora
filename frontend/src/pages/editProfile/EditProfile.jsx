@@ -1,6 +1,6 @@
 import React, { useState , useEffect } from 'react'
 import { useUser } from '../../utils/UserContext.jsx'
-
+import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
 const EditProfile = () => {
@@ -11,15 +11,29 @@ const EditProfile = () => {
   const [inputTag, setInputTag] = useState('')
   const { user, updateUser } = useUser()
   const [formData, setFormData] = useState(user)
+  const [avatarFile, setAvatarFile] = useState(null)
   const [passwordData, setPasswordData] = useState({
-    currentPassword: '',
+    oldPassword: '',
     newPassword: '',
     confirmPassword: '',
   }) // State for password changes
+
+  const [linksData , setLinksData] = useState({
+    socialLinks: {
+        facebook: '',
+        instagram: '',
+        linkedin: '',
+        whatsapp: ''
+    }
+})
   const [error, setError] = useState('')
   const navigate = useNavigate();
 
-
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+    setAvatarFile(file);
+    setFormData({ ...formData, avatar: URL.createObjectURL(file) });
+  };
 
 
 /// functionality to handle skills tags
@@ -33,9 +47,10 @@ const EditProfile = () => {
     setTags(tags.filter((tag) => tag !== tagToRemove))
   }
 
-  useEffect(()=>{
-    setFormData({...formData , skills: tags})
-  }, [tags])
+  // useEffect(()=>{
+  //   setFormData({...formData , skills: tags})
+  //   const response = await axios.patch('http://localhost:8000/api/v1/users/update-user', {...formData},  { withCredentials: true})
+  // }, [tags]) 
 
 console.log(...tags)
 /////
@@ -54,44 +69,98 @@ console.log(...tags)
   // Handle changes for social links
   const handleSocialLinksChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      socialLinks: {
-        ...formData.socialLinks, // Preserve existing links
-        [name]: value, // Update only the relevant link
-      },
-    });
+    setLinksData((prevLinks) => ({
+        socialLinks: {
+            ...prevLinks.socialLinks,
+            [name]: value,
+        },
+    }));
   };
 
-  const handleSave = () => {
+  //===================function to  update the user details in backend ====================
 
-    if (selectedTab === 'change email or password') {
-      // Password change logic
-      const { currentPassword, newPassword, confirmPassword } = passwordData;
-
-      if (currentPassword !== user.password) {
-        setError('Current password is incorrect.')
-        return;
-      }
-      if (newPassword !== confirmPassword) {
-        setError('New passwords do not match.')
-        return;
-      }
-      if (newPassword === currentPassword) {
-        setError('New password must be different from the current password.')
-        return;
-      }
-
-      // Update password in formData
-      setFormData({ ...formData, password: newPassword });
-      setError(''); // Clear any previous errors
+  const updateUserDetail = async (e) => {
+    e.preventDefault()
+  
+    console.log('Update the user')
+    try {
+        console.log(formData)
+        const response = await axios.patch('http://localhost:8000/api/v1/users/update-user', {...formData, avatar: avatarFile},  { withCredentials: true, headers:{'Content-Type': 'application/json'}})
+        console.log(response)
+        // Update context or state with new user data
+        updateUser(response.data.user);
+        // navigate('/profile');
+    } catch (error) {
+        setError(error.response?.data?.message || 'Failed to update profile');
     }
+};
 
-    // Call updateUser from context and navigate back to profile
+console.log(updateUser)
 
-    updateUser(formData);
-    navigate(`/editProfile`)
+
+
+// ====================function to update the password in backend==================
+  const updatePassword = async(e) => {
+      e.preventDefault()
+      // Password change logic
+      const { oldPassword, newPassword, confirmPassword } = passwordData;
+
+      // if (oldPassword !== user.password) {
+      //   setError('Current password is incorrect.')
+      //   return;
+      // }
+      // if (newPassword !== confirmPassword) {
+      //   setError('New passwords do not match.')
+      //   return;
+      // }
+      // if (newPassword === oldPassword) {
+      //   setError('New password must be different from the current password.')
+      //   return;
+      // }
+
+      // // Update password in formData
+      // setFormData({ ...formData, password: newPassword });
+ 
+    
+    try {
+      const response = await axios.patch(
+          'http://localhost:8000/api/v1/users/update-password', 
+          { oldPassword, newPassword }, 
+          { withCredentials: true } // Necessary if using cookies for JWT
+      );
+
+      if (response.status === 200) {
+          alert('Password updated successfully');
+          setError(''); // Clear any previous errors
+      }
+  } catch (error) {
+      setError(error.response?.data?.message || 'Failed to update password');
+  }
+
+    // navigate(`/editProfile`)
   };
+
+// ================= function to update social links in backend =================== 
+    const updateSocialLinks = async (e)=>{
+      e.preventDefault();
+      console.log('this is running')
+    try {
+        const response = await axios.patch(
+            'http://localhost:8000/api/v1/users/social-links',
+            {
+                facebook: linksData.socialLinks.facebook,
+                instagram: linksData.socialLinks.instagram,
+                linkedin: linksData.socialLinks.linkedin,
+                whatsapp: linksData.socialLinks.whatsapp,
+            } ,
+            { withCredentials: true }
+        );
+        // updateUser(response.data.user); // Update context or global state if needed
+        alert('Social links updated successfully!');
+    } catch (error) {
+        console.error("Error updating social links:", error);
+    }
+    }
 
   //validation for  of password on account deletion
 const validatePassword = ()=>{
@@ -99,7 +168,7 @@ const validatePassword = ()=>{
   if(password !== user.password){
     passwordError = 'invalid password'
   }
-   return passwordError
+  return passwordError 
 }
 
 const handleAccountDelete = (e)=>{
@@ -138,21 +207,22 @@ console.log(error)
     {/* edit profile section starts here */}
     {selectedTab === 'edit profile' && (
       <div>
-      <div className="space-y-6">
+      <form onSubmit={updateUserDetail} className="space-y-6">
       <div>
-      
+      <label htmlFor="avatar">
         <input
+          id='avatar'
           type="file"
-          name="profilePicture"
-          onChange={(e) =>
-            setFormData({ ...formData, avatar: URL.createObjectURL(e.target.files[0]) })
-          }
+          name="avatar"
+          onChange={handleAvatarChange}
           className="w-full p-2 border outline-none rounded-md text-[0.9rem] text-gray-500 hover:border-gray-300 focus:border-gray-300"
         />
+        </label>
       </div>
       <div>
-      <label htmlFor="" className='font-bold text-[1rem] text-black/70'>User Name</label>
+      <label htmlFor="username" className='font-bold text-[1rem] text-black/70'>User Name</label>
         <input
+          id='username'
           type="text"
           name="username"
           value={formData.username}
@@ -162,8 +232,9 @@ console.log(error)
         />
       </div>
       <div>
-      <label htmlFor="" className='font-bold text-[1rem] text-black/70'>Company Name / Full Name</label>
+      <label htmlFor="fullName" className='font-bold text-[1rem] text-black/70'>Company Name / Full Name</label>
         <input
+          id='fullName'
           type="text"
           name="fullName"
           value={formData.fullName}
@@ -173,8 +244,9 @@ console.log(error)
         />
       </div>
       <div>
-      <label htmlFor="" className='font-bold text-[1rem] text-black/70'>City Name</label>
+      <label htmlFor="location" className='font-bold text-[1rem] text-black/70'>City Name</label>
         <input
+          id='location'
           type="text"
           name="location"
           value={formData.location}
@@ -186,6 +258,7 @@ console.log(error)
       <div className='flex flex-col my-3'>
         <label htmlFor="description" className='font-bold text-[1rem] text-black/70'>Bio</label>
         <textarea 
+            id='description'
             name="bio"  
             rows="10"  
             value={formData.bio}
@@ -199,7 +272,9 @@ console.log(error)
       <div className='w-[100%] my-2'>
         <p className=" font-bold text-[1rem] text-black/70 ">Skills</p>
         <div className="flex items-center space-x-2 w-[100%]">
+        <label htmlFor="skill"></label>
           <input 
+            id='skill'
             type="text"
             value={inputTag}
             onChange={(e) => setInputTag(e.target.value)}
@@ -235,19 +310,26 @@ console.log(error)
         </div>
         </div>
 
+        <button
+      type='submit'
+        // onClick={handleSave}
+        className="mt-4 bg-primary-600 hover:bg-primary-700 text-white py-2 px-4 rounded-md tex-[1rem] w-[200px]"
+      >
+        Save Changes
+      </button>
 
-
-      </div>
+      </form>
       </div>
     )}
     {/* edit profile section ends here */}
 
     {/* change email and password section here */}
     {selectedTab === 'change email or password' && (
-      <div className=' space-y-6'>
+      <form onSubmit={updatePassword} className=' space-y-6'>
       <div>
-      <label htmlFor="" className='font-bold text-[1rem] text-black/70'>Email</label>
+      <label htmlFor="email" className='font-bold text-[1rem] text-black/70'>Email</label>
         <input
+        id='email'
           type="email"
           name="email"
           value={formData.email}
@@ -257,23 +339,25 @@ console.log(error)
         />
       </div>
       <div>
-              <label className="font-bold text-[1rem] text-black/70">
+              <label htmlFor='oldPassword' className="font-bold text-[1rem] text-black/70">
                 Current Password
               </label>
               <input
+                id='oldPassword'
                 type="password"
-                name="currentPassword"
-                value={passwordData.currentPassword}
+                name="oldPassword"
+                value={passwordData.oldPassword}
                 onChange={handlePasswordChange}
                 className="w-full p-2 border outline-none rounded-md text-[0.9rem] text-gray-500 hover:border-gray-300 focus:border-gray-300"
                 placeholder="Enter your current password"
               />
             </div>
             <div>
-              <label className="font-bold text-[1rem] text-black/70">
+              <label htmlFor='newPassword' className="font-bold text-[1rem] text-black/70">
                 New Password
               </label>
               <input
+              id='newPassword'
                 type="password"
                 name="newPassword"
                 value={passwordData.newPassword}
@@ -283,10 +367,11 @@ console.log(error)
               />
             </div>
             <div>
-              <label className="font-bold text-[1rem] text-black/70">
+              <label htmlFor='confirmPassword' className="font-bold text-[1rem] text-black/70">
                 Confirm New Password
               </label>
               <input
+                id='confirmPassword'
                 type="password"
                 name="confirmPassword"
                 value={passwordData.confirmPassword}
@@ -296,69 +381,88 @@ console.log(error)
               />
             </div>
             {error && <p className="text-red-500">{error}</p>}
-          </div>
+            <button
+              type='submit'
+              // onClick={handleSave}
+              className="mt-4 bg-primary-600 hover:bg-primary-700 text-white py-2 px-4 rounded-md tex-[1rem] w-[200px]"
+            >
+              Save Changes
+            </button>
+          </form>
     )}
 
     {/* change email and password ends here */}
 
     {/* Social Links section start here */}
     {selectedTab === 'add social links' && (
-    <div className=' space-y-6 '>
+    <form onSubmit={updateSocialLinks} className=' space-y-6 '>
     <div>
-      <label htmlFor="" className='font-bold text-[1rem] text-black/70'>Facebook</label>
+      <label htmlFor="facebook" className='font-bold text-[1rem] text-black/70'>Facebook</label>
         <input
+        id='facebook'
           type="text"
           name="facebook"
-          value={formData.skills.facebook}
+          value={linksData.socialLinks.facebook}
           onChange={handleSocialLinksChange}
           className="w-full p-2 border outline-none rounded-md text-[0.9rem] text-gray-500 hover:border-gray-300 focus:border-gray-300"
           
         />
       </div>
       <div>
-      <label htmlFor="" className='font-bold text-[1rem] text-black/70'>Instagram</label>
+      <label htmlFor="instagram" className='font-bold text-[1rem] text-black/70'>Instagram</label>
         <input
+          id='instagram'
           type="text"
           name="instagram"
-          value={formData.skills.instagram}
+          value={linksData.socialLinks.instagram}
           onChange={handleSocialLinksChange}
           className="w-full p-2 border outline-none rounded-md text-[0.9rem] text-gray-500 hover:border-gray-300 focus:border-gray-300"
           
         />
       </div>
       <div>
-      <label htmlFor="" className='font-bold text-[1rem] text-black/70'>LinkedIn</label>
+      <label htmlFor="linkedIn" className='font-bold text-[1rem] text-black/70'>LinkedIn</label>
         <input
+        id='linkedIn'
           type="text"
           name="linkedin"
-          value={formData.skills.linkedin}
+          value={linksData.socialLinks.linkedin}
           onChange={handleSocialLinksChange}
           className="w-full p-2 border outline-none rounded-md text-[0.9rem] text-gray-500 hover:border-gray-300 focus:border-gray-300"
           
         />
       </div>
       <div>
-      <label htmlFor="" className='font-bold text-[1rem] text-black/70'>Whatsapp</label>
+      <label htmlFor="whatsapp" className='font-bold text-[1rem] text-black/70'>Whatsapp</label>
         <input
+          id='whatsapp'
           type="text"
           name="whatsapp"
-          value={formData.skills.whatsapp}
+          value={linksData.socialLinks.whatsapp}
           onChange={handleSocialLinksChange}
           className="w-full p-2 border outline-none rounded-md text-[0.9rem] text-gray-500 hover:border-gray-300 focus:border-gray-300"
           
         />
       </div>
-    </div>
-  )}
-    {/* social links section ends here */}
-
-
       <button
-        onClick={handleSave}
+      type='submit'
+        // onClick={handleSave}
         className="mt-4 bg-primary-600 hover:bg-primary-700 text-white py-2 px-4 rounded-md tex-[1rem] w-[200px]"
       >
         Save Changes
       </button>
+    </form>
+  )}
+    {/* social links section ends here */}
+
+
+      {/* <button
+      type='submit'
+        // onClick={handleSave}
+        className="mt-4 bg-primary-600 hover:bg-primary-700 text-white py-2 px-4 rounded-md tex-[1rem] w-[200px]"
+      >
+        Save Changes
+      </button> */}
       </div>
 
           {/* tabs  */}
@@ -392,8 +496,9 @@ console.log(error)
             <p className='text-sm'>After deleting your account, all data and resources are permanently removed. Enter your password to confirm deletion.</p>
             </div>
             <div>
-            <label className="block text-sm font-medium text-gray-700">Enter your Password</label>
+            <label htmlFor='password' className="block text-sm font-medium text-gray-700">Enter your Password</label>
                 <input
+                  id='password'
                   type="password"
                   name="password"
                   value={password}

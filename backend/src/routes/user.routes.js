@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { checkAuth, logOutUser, loginUser, refreshAccessToken, registerUser, updateSocialLinks, updateUserDetails, updateUserPassword,} from "../controllers/user.controller.js";
+import { checkAuth, logOutUser, loginUser, refreshAccessToken, registerUser, updateSocialLinks, updateUserDetails, updateUserPassword, deleteUser, userProfile} from "../controllers/user.controller.js";
 import passport from 'passport';
 import '../auth/passport.js'; 
 import {verifyJWT} from '../middlewares/auth.middleware.js'
@@ -10,17 +10,13 @@ const router = Router()
 // User registration route
 router.route('/register').post(registerUser)
 router.route('/update-password').patch(verifyJWT, updateUserPassword)
-router.route('/update-user').patch(verifyJWT, upload.fields([{name:'avatar', maxCount: 1}, {name:'coverImage', maxCount: 1}]) ,updateUserDetails)
-router.route('/social-links').put(verifyJWT, updateSocialLinks)
+router.route('/update-user').patch(verifyJWT, upload.fields([{name:'avatar', maxCount: 1}]) ,updateUserDetails)
+router.route('/social-links').patch(verifyJWT, updateSocialLinks)
 
 // User login route
 router.route('/login').post(loginUser) 
 
-// // route to fetch data after logged in user 
-// router.route('/me').get(verifyJWT, (req, res) => {
-//     // 'req.user' will contain user data from the verified JWT
-//     res.json(req.user);
-//   })
+
 
 
 // Google Authentication
@@ -54,7 +50,9 @@ router.get('/google/callback', passport.authenticate('google', { session: false 
 
 
 // Secure routes
-router.route('/logout').post(verifyJWT, logOutUser)
+router.route('/profile').get(verifyJWT,userProfile)
+router.route('/delete').get(verifyJWT,deleteUser)
+router.route('/logout').get(verifyJWT, logOutUser)
 router.route('/check-auth').get(verifyJWT,checkAuth)
 router.route('/refresh-token').post(refreshAccessToken)
 
